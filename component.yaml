@@ -1,0 +1,27 @@
+name: Get Lines
+description: Gets the specified number of lines from the input file.
+
+inputs:
+- {name: Input 1, type: String, description: 'Data for input 1'}
+- {name: Parameter 1, type: Integer, default: '100', description: 'Number of lines to copy'}
+
+outputs:
+- {name: Output 1, type: String, description: 'Output 1 data.'}
+
+implementation:
+  container:
+    image: gcr.io/my-org/my-image@sha256:a172..752f
+    # command is a list of strings (command-line arguments). 
+    # The YAML language has two syntaxes for lists and you can use either of them. 
+    # Here we use the "flow syntax" - comma-separated strings inside square brackets.
+    command: [
+      python3, 
+      # Path of the program inside the container
+      /pipelines/component/src/program.py,
+      --input1-path,
+      {inputPath: Input 1},
+      --param1, 
+      {inputValue: Parameter 1},
+      --output1-path, 
+      {outputPath: Output 1},
+    ]
