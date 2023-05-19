@@ -1,15 +1,13 @@
 import React, { useCallback } from 'react';
 import ReactFlow, {
-  MiniMap,
   Controls,
-  Background,
   useNodesState,
   useEdgesState,
   addEdge,
   Connection,
   Edge,
-  BackgroundVariant,
 } from 'reactflow';
+import Header from './components/Header';
 
 import 'reactflow/dist/style.css';
 import './App.css';
@@ -20,6 +18,8 @@ const initialNodes = [
 ];
 const initialEdges = [{ id: 'e1-2', source: '1', target: '2' }];
 
+const proOptions = { hideAttribution: true };
+
 export default function App() {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
@@ -27,17 +27,20 @@ export default function App() {
   const onConnect = useCallback((params: Edge<any> | Connection) => setEdges((eds) => addEdge(params, eds)), [setEdges]);
 
   return (
-    <div style={{ width: '100vw', height: '100vh' }}>
-      <ReactFlow
-        nodes={nodes}
-        edges={edges}
-        onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
-      >
-        <Controls />
-        <Background variant={BackgroundVariant.Cross} size={3} />
-      </ReactFlow>
+    <div className='app'>
+      <Header />
+      <div style={{ width: '100vw', height: '100vh' }}>
+        <ReactFlow
+          nodes={nodes}
+          edges={edges}
+          onNodesChange={onNodesChange}
+          onEdgesChange={onEdgesChange}
+          onConnect={onConnect}
+          proOptions={proOptions}
+        >
+          <Controls showFitView={false} showInteractive={false} />
+        </ReactFlow>
+      </div>
     </div>
   );
 }
