@@ -4,15 +4,3 @@
   height: 100vh;
   overflow: hidden;
 }
-
-.react-flow {
-  background-color: #F2F2F2;
-}
-
-.react-flow__controls-button {
-  display: inline;
-}
-
-.react-flow__controls svg {
-  height: 100%;
-}

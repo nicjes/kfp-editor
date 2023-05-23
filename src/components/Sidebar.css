@@ -1,0 +1,37 @@
+.sidebar {
+    border-left: 3px solid #e6e6e6;
+    padding: 0.75rem;
+    background-color: #fff;
+}
+
+.heading.hub {
+    margin: 0 0 1rem 0;
+}
+
+.component {
+    box-sizing: content-box;
+    height: 18px;
+    width: 128px;
+    padding: 10px;
+    border: 1px solid #1a192b;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: grab;
+}
+
+.component.input {
+    border-color: #0041d0;
+}
+
+.component.output {
+    border-color: #ff0072;
+}
+
+.reactflow-wrapper {
+    flex-grow: 1;
+    height: 100%;
+}
