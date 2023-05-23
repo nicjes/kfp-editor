@@ -7,8 +7,10 @@ import ReactFlow, {
     Connection,
     Edge,
     ReactFlowProvider,
+    Panel,
 } from 'reactflow';
 import Sidebar from './Sidebar';
+import PipelineExporter from './PipelineExporter';
 
 import 'reactflow/dist/style.css';
 import './Editor.css';
@@ -19,8 +21,6 @@ const initialNodes = [
     { id: '3', position: { x: 10, y: 210 }, data: { label: '3' } },
 ];
 const initialEdges = [{ id: 'e1-2', source: '1', target: '2' }];
-
-const proOptions = { hideAttribution: true };
 
 let id = 3;
 const getId = () => `component_${id++}`;
@@ -79,8 +79,12 @@ function Editor() {
                         onInit={setReactFlowInstance}
                         onDrop={onDrop}
                         onDragOver={onDragOver}
-                        proOptions={proOptions}
+                        proOptions={{ hideAttribution: true }}
+                        zoomOnDoubleClick={false}
+                        deleteKeyCode={['Backspace', 'Delete']}
+                        multiSelectionKeyCode={['ControlLeft', 'ControlRight', 'OSLeft', 'OSRight']}
                     >
+                        <Panel position='bottom-right'><PipelineExporter /></Panel>
                         <Controls showFitView={false} showInteractive={false} />
                     </ReactFlow>
                 </div>

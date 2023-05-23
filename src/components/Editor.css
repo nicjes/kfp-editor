@@ -7,6 +7,10 @@
     background-color: #F2F2F2;
 }
 
+.react-flow__pane {
+    cursor: default;
+}
+
 .react-flow__controls-button {
     display: inline;
 }
