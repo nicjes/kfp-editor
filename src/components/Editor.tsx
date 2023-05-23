@@ -8,30 +8,37 @@ import ReactFlow, {
     Edge,
     ReactFlowProvider,
     Panel,
+    NodeTypes,
+    Node,
+    ReactFlowInstance,
 } from 'reactflow';
 import Sidebar from './Sidebar';
 import PipelineExporter from './PipelineExporter';
+import PythonComponentNode from './PythonComponentNode';
 
+//import 'reactflow/dist/base.css';
 import 'reactflow/dist/style.css';
 import './Editor.css';
 
-const initialNodes = [
-    { id: '1', position: { x: 10, y: 10 }, data: { label: '1' } },
-    { id: '2', position: { x: 10, y: 110 }, data: { label: '2' } },
-    { id: '3', position: { x: 10, y: 210 }, data: { label: '3' } },
-];
-const initialEdges = [{ id: 'e1-2', source: '1', target: '2' }];
+const nodeTypes: NodeTypes = { pythonComponent: PythonComponentNode };
 
-let id = 3;
-const getId = () => `component_${id++}`;
+const initialNodes: Node[] = [
+    { id: 'n-1', type: 'pythonComponent', position: { x: 10, y: 10 }, data: { label: 'Component 1' } },
+    { id: 'n-2', position: { x: 10, y: 210 }, data: { label: 'Component 2' } },
+    { id: 'n-3', position: { x: 10, y: 310 }, data: { label: 'Component 3' } },
+];
+const initialEdges: Edge[] = [{ id: 'e-1-2', source: 'n-1', sourceHandle: 'h-1', target: 'n-2' }];
+
+let id = 4;
+const getId = () => `n-${id++}`;
 
 function Editor() {
     const reactFlowWrapper = useRef<HTMLDivElement>(null);
     const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
     const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
-    const [reactFlowInstance, setReactFlowInstance] = useState<any>(null);
+    const [reactFlowInstance, setReactFlowInstance] = useState<ReactFlowInstance>(null as any);
 
-    const onConnect = useCallback((params: Edge<any> | Connection) => setEdges((eds) => addEdge(params, eds)), [setEdges]);
+    const onConnect = useCallback((params: Edge | Connection) => setEdges((eds) => addEdge(params, eds)), [setEdges]);
 
     const onDragOver = useCallback((event: DragEvent) => {
         event.preventDefault();
@@ -71,6 +78,7 @@ function Editor() {
             <ReactFlowProvider>
                 <div className="reactflow-wrapper" ref={reactFlowWrapper}>
                     <ReactFlow
+                        nodeTypes={nodeTypes}
                         nodes={nodes}
                         edges={edges}
                         onNodesChange={onNodesChange}

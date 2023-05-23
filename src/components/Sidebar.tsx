@@ -20,6 +20,9 @@ function Sidebar() {
             <div className="component output" onDragStart={(event) => onDragStart(event, 'output')} draggable>
                 Output Component
             </div>
+            <div className="component python" onDragStart={(event) => onDragStart(event, 'pythonComponent')} draggable>
+                Python Component
+            </div>
         </aside>
     );
 };
