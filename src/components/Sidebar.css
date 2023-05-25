@@ -23,11 +23,11 @@
     cursor: grab;
 }
 
-.component.input {
+.component.python {
     border-color: #0041d0;
 }
 
-.component.output {
+.component.url {
     border-color: #ff0072;
 }
 

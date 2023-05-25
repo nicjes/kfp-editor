@@ -1,21 +1,24 @@
-import { ChangeEvent, useCallback } from 'react';
+import { ChangeEvent, useCallback, useEffect } from 'react';
 import { Handle, NodeProps, Position } from 'reactflow';
-
-import './PythonComponentNode.css';
+import UrlComponent from '../../models/UrlComponent';
 
 const handleStyle = { left: 10 };
 
-function PythonComponentNode({ data }: NodeProps) {
+function UrlComponentNode({ data }: NodeProps) {
+    useEffect(() => {
+        data.component = new UrlComponent('', '');
+    }, []);
+
     const onChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-        console.log(event.target.value);
+        data.component.url = event.target.value;
     }, []);
 
     return (
         <div className="node">
             <Handle type="target" position={Position.Top} />
             <div>
-                <p>Python Component</p>
-                <label>Paste your Python Code:</label>
+                <p>URL Component</p>
+                <label>Paste your URL:</label>
                 <input onChange={onChange} className="nodrag" />
             </div>
             <Handle
@@ -29,4 +32,4 @@ function PythonComponentNode({ data }: NodeProps) {
     );
 }
 
-export default PythonComponentNode;
+export default UrlComponentNode;

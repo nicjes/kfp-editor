@@ -16,25 +16,27 @@ import ReactFlow, {
 } from 'reactflow';
 import Sidebar from './Sidebar';
 import PipelineExporter from './PipelineExporter';
-import PythonComponentNode from './PythonComponentNode';
+import PythonComponentNode from './nodes/PythonComponentNode';
+import PythonComponent from '../models/PythonComponent';
+import UrlComponentNode from './nodes/UrlComponentNode';
+import UrlComponent from '../models/UrlComponent';
 
 //import 'reactflow/dist/base.css';
 import 'reactflow/dist/style.css';
 import './Editor.css';
 
-const nodeTypes: NodeTypes = { pythonComponent: PythonComponentNode };
+const nodeTypes: NodeTypes = { pythonComponent: PythonComponentNode, urlComponent: UrlComponentNode };
 const edgeStyles = { type: 'smoothstep', style: { strokeWidth: 3 }, markerEnd: { type: MarkerType.ArrowClosed } }
 
 const initialNodes: Node[] = [
-    { id: 'n-1', type: 'pythonComponent', position: { x: 10, y: 10 }, data: { label: 'Component 1' } },
-    { id: 'n-2', position: { x: 10, y: 210 }, data: { label: 'Component 2' } },
-    { id: 'n-3', position: { x: 10, y: 310 }, data: { label: 'Component 3' } },
+    { id: 'n-1', type: 'pythonComponent', position: { x: 10, y: 10 }, data: { component: new PythonComponent('test-name', 'test-code') } },
+    { id: 'n-2', type: 'urlComponent', position: { x: 10, y: 210 }, data: { component: new UrlComponent('test-name', 'test-url') } },
 ];
 const initialEdges: Edge[] = [{ id: 'e-1-2', source: 'n-1', sourceHandle: 'h-1', target: 'n-2', ...edgeStyles }];
 
 const flowKey = 'pipeline';
 
-let id = 4;
+let id = initialNodes.length + 1;
 const getId = () => `n-${id++}`;
 
 function Editor() {
@@ -91,7 +93,7 @@ function Editor() {
                 id: getId(),
                 type,
                 position,
-                data: { label: `${type} component` },
+                data: {}
             };
 
             setNodes((nds) => nds.concat(newNode));
