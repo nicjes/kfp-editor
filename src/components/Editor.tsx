@@ -11,6 +11,8 @@ import ReactFlow, {
     NodeTypes,
     Node,
     ReactFlowInstance,
+    ConnectionLineType,
+    MarkerType,
 } from 'reactflow';
 import Sidebar from './Sidebar';
 import PipelineExporter from './PipelineExporter';
@@ -21,13 +23,14 @@ import 'reactflow/dist/style.css';
 import './Editor.css';
 
 const nodeTypes: NodeTypes = { pythonComponent: PythonComponentNode };
+const edgeStyles = { type: 'smoothstep', style: { strokeWidth: 3 }, markerEnd: { type: MarkerType.ArrowClosed } }
 
 const initialNodes: Node[] = [
     { id: 'n-1', type: 'pythonComponent', position: { x: 10, y: 10 }, data: { label: 'Component 1' } },
     { id: 'n-2', position: { x: 10, y: 210 }, data: { label: 'Component 2' } },
     { id: 'n-3', position: { x: 10, y: 310 }, data: { label: 'Component 3' } },
 ];
-const initialEdges: Edge[] = [{ id: 'e-1-2', source: 'n-1', sourceHandle: 'h-1', target: 'n-2' }];
+const initialEdges: Edge[] = [{ id: 'e-1-2', source: 'n-1', sourceHandle: 'h-1', target: 'n-2', ...edgeStyles }];
 
 let id = 4;
 const getId = () => `n-${id++}`;
@@ -38,7 +41,7 @@ function Editor() {
     const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
     const [reactFlowInstance, setReactFlowInstance] = useState<ReactFlowInstance>(null as any);
 
-    const onConnect = useCallback((params: Edge | Connection) => setEdges((eds) => addEdge(params, eds)), [setEdges]);
+    const onConnect = useCallback((params: Edge | Connection) => setEdges((eds) => addEdge({ ...params, ...edgeStyles }, eds)), [setEdges]);
 
     const onDragOver = useCallback((event: DragEvent) => {
         event.preventDefault();
@@ -91,6 +94,8 @@ function Editor() {
                         zoomOnDoubleClick={false}
                         deleteKeyCode={['Backspace', 'Delete']}
                         multiSelectionKeyCode={['ControlLeft', 'ControlRight', 'OSLeft', 'OSRight']}
+                        connectionLineType={ConnectionLineType.Straight}
+                        connectionLineStyle={{ strokeWidth: 3 }}
                     >
                         <Panel position='bottom-right'><PipelineExporter /></Panel>
                         <Controls showFitView={false} showInteractive={false} />
