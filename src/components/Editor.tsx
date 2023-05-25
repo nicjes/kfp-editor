@@ -32,6 +32,8 @@ const initialNodes: Node[] = [
 ];
 const initialEdges: Edge[] = [{ id: 'e-1-2', source: 'n-1', sourceHandle: 'h-1', target: 'n-2', ...edgeStyles }];
 
+const flowKey = 'pipeline';
+
 let id = 4;
 const getId = () => `n-${id++}`;
 
@@ -40,6 +42,27 @@ function Editor() {
     const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
     const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
     const [reactFlowInstance, setReactFlowInstance] = useState<ReactFlowInstance>(null as any);
+
+    const onSave = useCallback(() => {
+        if (reactFlowInstance) {
+            const flow = reactFlowInstance.toObject();
+            localStorage.setItem(flowKey, JSON.stringify(flow));
+        }
+    }, [reactFlowInstance]);
+
+    const onRestore = useCallback(() => {
+        const restoreFlow = async () => {
+            const storageItem = localStorage.getItem(flowKey);
+            const flow = storageItem ? JSON.parse(storageItem) : null;
+
+            if (flow) {
+                setNodes(flow.nodes);
+                setEdges(flow.edges);
+            }
+        };
+
+        restoreFlow();
+    }, [setNodes]);
 
     const onConnect = useCallback((params: Edge | Connection) => setEdges((eds) => addEdge({ ...params, ...edgeStyles }, eds)), [setEdges]);
 
@@ -98,6 +121,10 @@ function Editor() {
                         connectionLineStyle={{ strokeWidth: 3 }}
                     >
                         <Panel position='bottom-right'><PipelineExporter /></Panel>
+                        <Panel position="top-right">
+                            <button onClick={onSave}>Save</button>
+                            <button onClick={onRestore}>Restore</button>
+                        </Panel>
                         <Controls showFitView={false} showInteractive={false} />
                     </ReactFlow>
                 </div>
