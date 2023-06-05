@@ -20,7 +20,7 @@ app.get('/api/kfp/compile', (req, res) => {
         if (code === 0) {
             res.sendFile('v1_pipeline.yaml', { root: 'out' });
         } else {
-            res.status(500).json({ code: code, data: d, error: e });
+            res.status(500).json({ error: e });
         }
     });
 });
