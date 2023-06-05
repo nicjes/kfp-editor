@@ -1,5 +1,5 @@
 {
-  "name": "kfp-editor",
+  "name": "kfp-editor-client",
   "private": true,
   "version": "0.0.0",
   "type": "module",
