@@ -3,7 +3,7 @@ const { spawn } = require('child_process');
 
 const app = express();
 
-app.get('/', (req, res) => {
+app.get('/api/kfp/compile', (req, res) => {
     const pythonProcess = spawn('python', ['./src/scripts/comparison.py']);
     var d = '';
     var e = '';
@@ -17,7 +17,11 @@ app.get('/', (req, res) => {
     });
 
     pythonProcess.on('close', code => {
-        res.json({ code: code, data: d, error: e });
+        if (code === 0) {
+            res.sendFile('v1_pipeline.yaml', { root: 'out' });
+        } else {
+            res.status(500).json({ code: code, data: d, error: e });
+        }
     });
 });
 
