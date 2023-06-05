@@ -1,9 +1,18 @@
 import { saveAs } from 'file-saver';
 
-import './PipelineExporter.css';
+import { ReactFlowInstance } from 'reactflow';
 
-function PipelineExporter() {
+
+function PipelineExporter({ reactFlowInstance }: { reactFlowInstance: ReactFlowInstance }) {
+
     const onExportPipeline = () => {
+
+        //TODO: Post saved json object to server instead getting generic yaml
+
+        const flow = reactFlowInstance.toObject();
+        localStorage.setItem("test", JSON.stringify(flow));
+
+
         fetch('/api/kfp/compile')
             .then(async response => {
                 if (response.ok) {
@@ -22,7 +31,7 @@ function PipelineExporter() {
     };
 
     return (
-        <button onClick={onExportPipeline}>Export Pipeline</button>
+        <button className='panel-button' onClick={onExportPipeline}>Export Pipeline</button>
     );
 };
 
