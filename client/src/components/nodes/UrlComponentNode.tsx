@@ -1,33 +1,60 @@
-import { ChangeEvent, useCallback, useEffect } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { Handle, NodeProps, Position } from 'reactflow';
+
 import UrlComponent from '../../models/UrlComponent';
 
-const handleStyle = { left: 10 };
-
 function UrlComponentNode({ data }: NodeProps) {
+    const dialogRef = useRef<HTMLDialogElement>(null);
+    const [savedInputValue, setSavedInputValue] = useState('');
+    const [currentInputValue, setCurrentInputValue] = useState('');
+
+    const handleShowDialog = () => {
+        if (dialogRef.current) {
+            dialogRef.current.showModal();
+        }
+    };
+
+    const handleCloseDialog = () => {
+        if (dialogRef.current) {
+            dialogRef.current.close();
+        }
+    };
+
+    const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+        setCurrentInputValue(event.target.value);
+    };
+
+    const handleCancel = () => {
+        setCurrentInputValue(savedInputValue);
+        handleCloseDialog();
+    };
+
+    const handleConfirm = () => {
+        data.component.url = currentInputValue;
+        setSavedInputValue(currentInputValue);
+        handleCloseDialog();
+    };
+
     useEffect(() => {
         data.component = new UrlComponent('', '');
     }, []);
 
-    const onChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-        data.component.url = event.target.value;
-    }, []);
 
     return (
-        <div className="node">
+        <div className="node" onDoubleClick={handleShowDialog}>
             <Handle type="target" position={Position.Top} />
-            <div>
-                <p>URL Component</p>
-                <label>Paste your URL:</label>
-                <input onChange={onChange} className="nodrag" />
-            </div>
-            <Handle
-                type="source"
-                position={Position.Bottom}
-                id="h-1"
-                style={handleStyle}
-            />
-            <Handle type="source" position={Position.Bottom} id="h-2" />
+            <p>URL Component</p>
+            <dialog ref={dialogRef} className="nodrag" >
+                <form>
+                    <label htmlFor='urlInput'>Paste your URL:</label>
+                    <p><input type='url' id='urlInput' value={currentInputValue} onChange={handleInputChange} /></p>
+                    <div>
+                        <button onClick={handleCancel} type="button">Cancel</button>
+                        <button onClick={handleConfirm} type="button">Confirm</button>
+                    </div>
+                </form>
+            </dialog>
+            <Handle type="source" position={Position.Bottom} />
         </div>
     );
 }

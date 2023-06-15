@@ -19,9 +19,23 @@
     height: 100%;
 }
 
+.node {
+    border: 1px solid #eee;
+    padding: 5px;
+    border-radius: 5px;
+    background: white;
+}
+
+dialog {
+    cursor: default;
+}
+
+button {
+    cursor: pointer;
+}
+
 .panel-button {
     background-color: #fefefe;
     padding: 0.5rem 1rem;
     border: solid #eee;
-    cursor: pointer;
 }

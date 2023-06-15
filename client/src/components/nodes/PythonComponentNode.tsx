@@ -1,35 +1,60 @@
-import { ChangeEvent, useCallback, useEffect } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { Handle, NodeProps, Position } from 'reactflow';
 
-import './PythonComponentNode.css';
 import PythonComponent from '../../models/PythonComponent';
 
-const handleStyle = { left: 10 };
-
 function PythonComponentNode({ data }: NodeProps) {
+    const dialogRef = useRef<HTMLDialogElement>(null);
+    const [savedInputValue, setSavedInputValue] = useState('');
+    const [currentInputValue, setCurrentInputValue] = useState('');
+
+    const handleShowDialog = () => {
+        if (dialogRef.current) {
+            dialogRef.current.showModal();
+        }
+    };
+
+    const handleCloseDialog = () => {
+        if (dialogRef.current) {
+            dialogRef.current.close();
+        }
+    };
+
+    const handleInputChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+        setCurrentInputValue(event.target.value);
+    };
+
+    const handleCancel = () => {
+        setCurrentInputValue(savedInputValue);
+        handleCloseDialog();
+    };
+
+    const handleConfirm = () => {
+        data.component.code = currentInputValue;
+        setSavedInputValue(currentInputValue);
+        handleCloseDialog();
+    };
+
     useEffect(() => {
         data.component = new PythonComponent('', '');
     }, []);
 
-    const onChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-        data.component.code = event.target.value;
-    }, []);
 
     return (
-        <div className="node">
+        <div className="node" onDoubleClick={handleShowDialog}>
             <Handle type="target" position={Position.Top} />
-            <div>
-                <p>Python Component</p>
-                <label>Paste your Python Code:</label>
-                <input onChange={onChange} className="nodrag" />
-            </div>
-            <Handle
-                type="source"
-                position={Position.Bottom}
-                id="h-1"
-                style={handleStyle}
-            />
-            <Handle type="source" position={Position.Bottom} id="h-2" />
+            <p>Python Component</p>
+            <dialog ref={dialogRef} className="nodrag" >
+                <form>
+                    <label htmlFor='codeInput'>Paste your Python Code:</label>
+                    <p><textarea id='codeInput' value={currentInputValue} onChange={handleInputChange} /></p>
+                    <div>
+                        <button onClick={handleCancel} type="button">Cancel</button>
+                        <button onClick={handleConfirm} type="button">Confirm</button>
+                    </div>
+                </form>
+            </dialog>
+            <Handle type="source" position={Position.Bottom} />
         </div>
     );
 }
