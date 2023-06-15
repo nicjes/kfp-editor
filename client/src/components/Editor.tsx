@@ -22,12 +22,13 @@ import PythonComponentNode from './nodes/PythonComponentNode';
 import PythonComponent from '../models/PythonComponent';
 import UrlComponentNode from './nodes/UrlComponentNode';
 import UrlComponent from '../models/UrlComponent';
+import YamlComponentNode from './nodes/YamlComponentNode';
 
 //import 'reactflow/dist/base.css';
 import 'reactflow/dist/style.css';
 import './Editor.css';
 
-const nodeTypes: NodeTypes = { pythonComponent: PythonComponentNode, urlComponent: UrlComponentNode };
+const nodeTypes: NodeTypes = { pythonComponent: PythonComponentNode, urlComponent: UrlComponentNode, yamlComponent: YamlComponentNode };
 const edgeStyles = { type: 'smoothstep', style: { strokeWidth: 3 }, markerEnd: { type: MarkerType.ArrowClosed } }
 
 const initialNodes: Node[] = [

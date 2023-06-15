@@ -4,31 +4,15 @@
     background-color: #fff;
 }
 
-.heading.hub {
+.hub-heading {
     margin: 0 0 1rem 0;
 }
 
-.component {
-    box-sizing: content-box;
-    height: 18px;
-    width: 128px;
-    padding: 10px;
-    border: 1px solid #1a192b;
-    border-radius: 3px;
+.hub-node {
     margin-bottom: 10px;
-    font-size: 12px;
     display: flex;
     justify-content: center;
     align-items: center;
-    cursor: grab;
-}
-
-.component.python {
-    border-color: #0041d0;
-}
-
-.component.url {
-    border-color: #ff0072;
 }
 
 .reactflow-wrapper {

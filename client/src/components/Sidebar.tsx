@@ -10,15 +10,15 @@ function Sidebar() {
 
     return (
         <aside className='sidebar'>
-            <h4 className='heading hub'>Component Hub</h4>
-            <div className="component" onDragStart={(event) => onDragStart(event, 'default')} draggable>
-                Default Component
-            </div>
-            <div className="component url" onDragStart={(event) => onDragStart(event, 'urlComponent')} draggable>
+            <h4 className='hub-heading'>Component Hub</h4>
+            <div className="node hub-node url" onDragStart={(event) => onDragStart(event, 'urlComponent')} draggable>
                 URL Component
             </div>
-            <div className="component python" onDragStart={(event) => onDragStart(event, 'pythonComponent')} draggable>
+            <div className="node hub-node python" onDragStart={(event) => onDragStart(event, 'pythonComponent')} draggable>
                 Python Component
+            </div>
+            <div className="node hub-node yaml" onDragStart={(event) => onDragStart(event, 'yamlComponent')} draggable>
+                YAML Component
             </div>
         </aside>
     );
