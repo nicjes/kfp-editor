@@ -41,7 +41,7 @@ function UrlComponentNode({ data }: NodeProps) {
 
 
     return (
-        <div className="node" onDoubleClick={handleShowDialog}>
+        <div className="node component" onDoubleClick={handleShowDialog}>
             <Handle type="target" position={Position.Top} />
             <p>URL Component</p>
             <dialog ref={dialogRef} className="nodrag" >

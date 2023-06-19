@@ -1,9 +1,7 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { Handle, NodeProps, Position } from 'reactflow';
 
-import PythonComponent from '../../models/PythonComponent';
-
-function PythonComponentNode({ data }: NodeProps) {
+function CommentNode({ data }: NodeProps) {
     const dialogRef = useRef<HTMLDialogElement>(null);
     const [savedInputValue, setSavedInputValue] = useState('');
     const [currentInputValue, setCurrentInputValue] = useState('');
@@ -20,7 +18,7 @@ function PythonComponentNode({ data }: NodeProps) {
         }
     };
 
-    const handleInputChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         setCurrentInputValue(event.target.value);
     };
 
@@ -30,33 +28,32 @@ function PythonComponentNode({ data }: NodeProps) {
     };
 
     const handleConfirm = () => {
-        data.component.code = currentInputValue;
+        data.comment = currentInputValue;
         setSavedInputValue(currentInputValue);
         handleCloseDialog();
     };
 
     useEffect(() => {
-        data.component = new PythonComponent('', '');
+        data.comment = '';
     }, []);
 
 
     return (
-        <div className="node component" onDoubleClick={handleShowDialog}>
-            <Handle type="target" position={Position.Top} />
-            <p>Python Component</p>
+        <div className="node comment" onDoubleClick={handleShowDialog}>
+            <p>{savedInputValue}</p>
             <dialog ref={dialogRef} className="nodrag" >
                 <form>
-                    <label htmlFor='codeInput'>Paste your Python Code:</label>
-                    <p><textarea id='codeInput' value={currentInputValue} onChange={handleInputChange} /></p>
+                    <label htmlFor='commentInput'>Add a comment:</label>
+                    <p><input id='commentInput' value={currentInputValue} onChange={handleInputChange} /></p>
                     <div>
                         <button onClick={handleCancel} type="button">Cancel</button>
                         <button onClick={handleConfirm} type="button">Confirm</button>
                     </div>
                 </form>
             </dialog>
-            <Handle type="source" position={Position.Bottom} />
+            <Handle type="source" position={Position.Left} />
         </div>
     );
 }
 
-export default PythonComponentNode;
+export default CommentNode;

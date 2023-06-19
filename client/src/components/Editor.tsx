@@ -18,6 +18,7 @@ import Sidebar from './Sidebar';
 import PipelineExporter from './PipelineExporter';
 import PipelineSaver from './PipelineSaver';
 import PipelineRestorer from './PipelineRestorer';
+import CommentNode from './nodes/CommentNode';
 import PythonComponentNode from './nodes/PythonComponentNode';
 import PythonComponent from '../models/PythonComponent';
 import UrlComponentNode from './nodes/UrlComponentNode';
@@ -28,14 +29,22 @@ import YamlComponentNode from './nodes/YamlComponentNode';
 import 'reactflow/dist/style.css';
 import './Editor.css';
 
-const nodeTypes: NodeTypes = { pythonComponent: PythonComponentNode, urlComponent: UrlComponentNode, yamlComponent: YamlComponentNode };
-const edgeStyles = { type: 'smoothstep', style: { strokeWidth: 3 }, markerEnd: { type: MarkerType.ArrowClosed } }
+const nodeTypes: NodeTypes = { comment: CommentNode, pythonComponent: PythonComponentNode, urlComponent: UrlComponentNode, yamlComponent: YamlComponentNode };
+const edgeStyles = {
+    componentEdge: { type: 'smoothstep', style: { strokeWidth: 3 }, markerEnd: { type: MarkerType.ArrowClosed } },
+    commentEdge: { type: 'straight', style: { strokeWidth: 2, strokeDasharray: '4' } },
+};
 
 const initialNodes: Node[] = [
     { id: 'n-1', type: 'pythonComponent', position: { x: 10, y: 10 }, data: { component: new PythonComponent('test-name', 'test-code') } },
     { id: 'n-2', type: 'urlComponent', position: { x: 10, y: 210 }, data: { component: new UrlComponent('test-name', 'test-url') } },
+    { id: 'n-3', type: 'comment', position: { x: 170, y: 120 }, data: { comment: 'Comment' } },
 ];
-const initialEdges: Edge[] = [{ id: 'e-1-2', source: 'n-1', sourceHandle: 'h-1', target: 'n-2', ...edgeStyles }];
+
+const initialEdges: Edge[] = [
+    { id: 'e-1-2', source: 'n-1', sourceHandle: 'h-1', target: 'n-2', ...edgeStyles.componentEdge },
+    { id: 'c-2', source: 'n-3', sourceHandle: 'h-1', target: 'n-2', ...edgeStyles.commentEdge },
+];
 
 let id = initialNodes.length + 1;
 const getId = () => `n-${id++}`;
@@ -46,7 +55,14 @@ function Editor() {
     const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
     const [reactFlowInstance, setReactFlowInstance] = useState<ReactFlowInstance>(null as any);
 
-    const onConnect = useCallback((params: Edge | Connection) => setEdges((eds) => addEdge({ ...params, ...edgeStyles }, eds)), [setEdges]);
+    const onConnect = useCallback((params: Edge | Connection) => {
+        const type = nodes.find((node) => node.id === params.source)?.type;
+        if (type === 'comment') {
+            setEdges((eds) => addEdge({ ...params, ...edgeStyles.commentEdge }, eds));
+        } else {
+            setEdges((eds) => addEdge({ ...params, ...edgeStyles.componentEdge }, eds));
+        }
+    }, [setEdges, nodes]);
 
     const onDragOver = useCallback((event: DragEvent) => {
         event.preventDefault();
