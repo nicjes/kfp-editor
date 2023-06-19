@@ -44,6 +44,7 @@ function PythonComponentNode({ data }: NodeProps) {
         <div className="node component" onDoubleClick={handleShowDialog}>
             <Handle type="target" position={Position.Top} />
             <p>Python Component</p>
+            <img className='component-icon' src='src\assets\python.png' width={20}></img>
             <dialog ref={dialogRef} className="nodrag" >
                 <form>
                     <label htmlFor='codeInput'>Paste your Python Code:</label>

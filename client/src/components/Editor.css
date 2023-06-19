@@ -26,8 +26,8 @@
 
 .node {
     box-sizing: content-box;
-    height: 2rem;
-    width: 10rem;
+    height: 2.5rem;
+    width: 11rem;
     padding: 10px;
     font-size: 0.8rem;
     cursor: grab;
@@ -47,6 +47,12 @@
     border-image: linear-gradient(to right, grey 10%, transparent 10%) 10% 1;
     display: flex;
     align-items: center;
+}
+
+.component-icon {
+    position: absolute;
+    top: 5px;
+    right: 5px;
 }
 
 dialog {

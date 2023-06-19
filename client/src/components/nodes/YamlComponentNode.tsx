@@ -44,6 +44,7 @@ function YamlComponentNode({ data }: NodeProps) {
         <div className="node component" onDoubleClick={handleShowDialog}>
             <Handle type="target" position={Position.Top} />
             <p>YAML Component</p>
+            <img className='component-icon' src='src\assets\yaml.png' width={20}></img>
             <dialog ref={dialogRef} className="nodrag" >
                 <form>
                     <label htmlFor='fileInput'>Upload your Component YAML File:</label>

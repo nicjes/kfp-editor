@@ -10,6 +10,7 @@
 
 .hub-node {
     margin-bottom: 10px;
+    position: relative;
 }
 
 .reactflow-wrapper {

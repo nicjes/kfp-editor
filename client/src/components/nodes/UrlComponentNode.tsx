@@ -44,6 +44,7 @@ function UrlComponentNode({ data }: NodeProps) {
         <div className="node component" onDoubleClick={handleShowDialog}>
             <Handle type="target" position={Position.Top} />
             <p>URL Component</p>
+            <img className='component-icon' src='src\assets\url.png' width={20}></img>
             <dialog ref={dialogRef} className="nodrag" >
                 <form>
                     <label htmlFor='urlInput'>Paste your URL:</label>

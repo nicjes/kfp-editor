@@ -12,17 +12,20 @@ function Sidebar() {
         <aside className='sidebar'>
             <h4 className='hub-heading'>Component Hub</h4>
             <div className="node component hub-node url" onDragStart={(event) => onDragStart(event, 'urlComponent')} draggable>
-                URL Component
+                <p>URL Component</p>
+                <img className='component-icon' src='src\assets\url.png' width={20}></img>
             </div>
             <div className="node component hub-node python" onDragStart={(event) => onDragStart(event, 'pythonComponent')} draggable>
-                Python Component
+                <p>Python Component</p>
+                <img className='component-icon' src='src\assets\python.png' width={20}></img>
             </div>
             <div className="node component hub-node yaml" onDragStart={(event) => onDragStart(event, 'yamlComponent')} draggable>
-                YAML Component
+                <p>YAML Component</p>
+                <img className='component-icon' src='src\assets\yaml.png' width={20}></img>
             </div>
             <hr />
             <div className="node comment hub-node" onDragStart={(event) => onDragStart(event, 'comment')} draggable>
-                Comment
+                <p>Comment</p>
             </div>
         </aside>
     );
