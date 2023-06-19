@@ -24,12 +24,12 @@ import PythonComponent from '../models/PythonComponent';
 import UrlComponentNode from './nodes/UrlComponentNode';
 import UrlComponent from '../models/UrlComponent';
 import YamlComponentNode from './nodes/YamlComponentNode';
+import DatasetComponentNode from './nodes/DatasetComponentNode';
 
-//import 'reactflow/dist/base.css';
-import 'reactflow/dist/style.css';
+import 'reactflow/dist/base.css';
 import './Editor.css';
 
-const nodeTypes: NodeTypes = { comment: CommentNode, pythonComponent: PythonComponentNode, urlComponent: UrlComponentNode, yamlComponent: YamlComponentNode };
+const nodeTypes: NodeTypes = { comment: CommentNode, pythonComponent: PythonComponentNode, urlComponent: UrlComponentNode, yamlComponent: YamlComponentNode, datasetComponent: DatasetComponentNode };
 const edgeStyles = {
     componentEdge: { type: 'smoothstep', style: { strokeWidth: 3 }, markerEnd: { type: MarkerType.ArrowClosed } },
     commentEdge: { type: 'straight', style: { strokeWidth: 2, strokeDasharray: '4' } },
@@ -45,9 +45,6 @@ const initialEdges: Edge[] = [
     { id: 'e-1-2', source: 'n-1', sourceHandle: 'h-1', target: 'n-2', ...edgeStyles.componentEdge },
     { id: 'c-2', source: 'n-3', sourceHandle: 'h-1', target: 'n-2', ...edgeStyles.commentEdge },
 ];
-
-let id = initialNodes.length + 1;
-const getId = () => `n-${id++}`;
 
 function Editor() {
     const reactFlowWrapper = useRef<HTMLDivElement>(null);
@@ -74,6 +71,7 @@ function Editor() {
             event.preventDefault();
             const reactFlowBounds = reactFlowWrapper.current?.getBoundingClientRect();
 
+            const id = nodes[nodes.length - 1].id.replace(/\d+$/, (number) => (parseInt(number) + 1).toString());
             const type = event.dataTransfer.getData('application/reactflow');
 
             if (typeof type === 'undefined' || !type) {
@@ -86,7 +84,7 @@ function Editor() {
             });
 
             const newNode = {
-                id: getId(),
+                id,
                 type,
                 position,
                 data: {}
@@ -94,7 +92,7 @@ function Editor() {
 
             setNodes((nds) => nds.concat(newNode));
         },
-        [reactFlowInstance]
+        [reactFlowInstance, nodes]
     );
 
     return (
