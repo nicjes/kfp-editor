@@ -68,4 +68,6 @@ button {
     background-color: #fefefe;
     padding: 0.5rem 1rem;
     border: solid #eee;
+    cursor: pointer;
+    font-size: 0.8rem;
 }

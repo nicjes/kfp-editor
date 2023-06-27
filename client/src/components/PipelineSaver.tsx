@@ -7,13 +7,12 @@ function PipelineSaver({ reactFlowInstance }: { reactFlowInstance: ReactFlowInst
 
     const onSavePipeline = () => {
         const flow = reactFlowInstance.toObject();
-        localStorage.setItem("pipeline", JSON.stringify(flow));
-
-        //TODO: implement saveAs
+        const file = new Blob([JSON.stringify(flow)], { type: 'application/json' });
+        saveAs(file, 'pipeline.json');
     };
 
     return (
-        <button className='panel-button' onClick={onSavePipeline}>Save</button>
+        <button className='panel-button' title='Download current Pipeline as JSON' onClick={onSavePipeline}>Save</button>
     );
 };
 
