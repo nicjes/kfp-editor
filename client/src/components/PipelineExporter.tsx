@@ -1,16 +1,15 @@
 import { saveAs } from 'file-saver';
 
-import { ReactFlowInstance } from 'reactflow';
+import useStore from './state-store';
 
-
-function PipelineExporter({ reactFlowInstance }: { reactFlowInstance: ReactFlowInstance }) {
+function PipelineExporter() {
+    const reactFlowInstance = useStore((state) => state.reactFlowInstance);
 
     const onExportPipeline = () => {
-
         //TODO: Post saved json object to server instead getting generic yaml
 
-        const flow = reactFlowInstance.toObject();
-        localStorage.setItem("test", JSON.stringify(flow));
+        //const pipeline = reactFlowInstance.toObject();
+        //localStorage.setItem("test", JSON.stringify(pipeline));
 
 
         fetch('/api/kfp/compile')
@@ -31,7 +30,7 @@ function PipelineExporter({ reactFlowInstance }: { reactFlowInstance: ReactFlowI
     };
 
     return (
-        <button className='panel-button' onClick={onExportPipeline}>Export Pipeline</button>
+        <button className='panel-button' title='Export current Pipeline as Kubeflow YAML' onClick={onExportPipeline}>Export Pipeline</button>
     );
 };
 

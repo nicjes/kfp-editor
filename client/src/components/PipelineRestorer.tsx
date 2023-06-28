@@ -1,8 +1,7 @@
-import { Dispatch, SetStateAction } from 'react';
+import useStore from './state-store';
 
-import { Edge, Node } from 'reactflow';
-
-function PipelineRestorer({ setNodes, setEdges }: { setNodes: Dispatch<SetStateAction<Node<any, string | undefined>[]>>, setEdges: Dispatch<SetStateAction<Edge<any>[]>> }) {
+function PipelineRestorer() {
+    const [setNodes, setEdges] = useStore((state) => [state.setNodes, state.setEdges]);
 
     const onRestorePipeline = (event: React.ChangeEvent<HTMLInputElement>) => {
         const upload = event.target?.files?.[0];
