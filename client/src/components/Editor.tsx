@@ -13,6 +13,7 @@ import ReactFlow, {
     ReactFlowInstance,
     ConnectionLineType,
     MarkerType,
+    updateEdge,
 } from 'reactflow';
 import Sidebar from './Sidebar';
 import PipelineExporter from './PipelineExporter';
@@ -42,12 +43,13 @@ const initialNodes: Node[] = [
 ];
 
 const initialEdges: Edge[] = [
-    { id: 'e-1-2', source: 'n-1', sourceHandle: 'h-1', target: 'n-2', ...edgeStyles.componentEdge },
-    { id: 'c-2', source: 'n-3', sourceHandle: 'h-1', target: 'n-2', ...edgeStyles.commentEdge },
+    { id: 'e-1-2', source: 'n-1', target: 'n-2', ...edgeStyles.componentEdge },
+    { id: 'c-2', source: 'n-3', target: 'n-2', ...edgeStyles.commentEdge },
 ];
 
 function Editor() {
     const reactFlowWrapper = useRef<HTMLDivElement>(null);
+    const edgeUpdateSuccessful = useRef(true);
     const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
     const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
     const [reactFlowInstance, setReactFlowInstance] = useState<ReactFlowInstance>(null as any);
@@ -60,6 +62,23 @@ function Editor() {
             setEdges((eds) => addEdge({ ...params, ...edgeStyles.componentEdge }, eds));
         }
     }, [setEdges, nodes]);
+
+    const onEdgeUpdateStart = useCallback(() => {
+        edgeUpdateSuccessful.current = false;
+    }, []);
+
+    const onEdgeUpdate = useCallback((oldEdge: Edge, newConnection: Connection) => {
+        edgeUpdateSuccessful.current = true;
+        setEdges((els) => updateEdge(oldEdge, newConnection, els));
+    }, []);
+
+    const onEdgeUpdateEnd = useCallback((_: any, edge: { id: string; }) => {
+        if (!edgeUpdateSuccessful.current) {
+            setEdges((eds) => eds.filter((e) => e.id !== edge.id));
+        }
+
+        edgeUpdateSuccessful.current = true;
+    }, []);
 
     const onDragOver = useCallback((event: DragEvent) => {
         event.preventDefault();
@@ -106,6 +125,9 @@ function Editor() {
                         onNodesChange={onNodesChange}
                         onEdgesChange={onEdgesChange}
                         onConnect={onConnect}
+                        onEdgeUpdate={onEdgeUpdate}
+                        onEdgeUpdateStart={onEdgeUpdateStart}
+                        onEdgeUpdateEnd={onEdgeUpdateEnd}
                         onInit={setReactFlowInstance}
                         onDrop={onDrop}
                         onDragOver={onDragOver}
