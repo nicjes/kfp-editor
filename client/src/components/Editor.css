@@ -11,6 +11,22 @@
     cursor: default;
 }
 
+.react-flow__handle-connecting {
+    background: #ff6060;
+}
+
+.react-flow__handle-valid {
+    background: #55dd99;
+}
+
+.react-flow__node:not(.react-flow__node-comment):hover {
+    box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.08);
+}
+
+.react-flow__node:not(.react-flow__node-comment).selectable.selected {
+    box-shadow: 0 0 0 0.5px #1a192b;
+}
+
 .react-flow__controls-button {
     display: inline;
 }
