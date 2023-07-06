@@ -6,27 +6,33 @@ function PipelineExporter() {
     const reactFlowInstance = useStore((state) => state.reactFlowInstance);
 
     const onExportPipeline = () => {
-        //TODO: Post saved json object to server instead getting generic yaml
+        if (reactFlowInstance) {
+            const flow = reactFlowInstance.toObject();
+            const dto = JSON.stringify(flow);
 
-        //const pipeline = reactFlowInstance.toObject();
-        //localStorage.setItem("test", JSON.stringify(pipeline));
-
-
-        fetch('/api/kfp/compile')
-            .then(async response => {
-                if (response.ok) {
-                    return response.blob();
-                } else {
-                    return response.json().then(json => {
-                        throw new Error(json.error);
-                    });
-                }
+            fetch('/api/kfp/compile', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: dto
             })
-            .then(blob => {
-                saveAs(blob, 'pipeline.yaml');
-            }).catch(error => {
-                console.error(error);
-            });
+                .then(async response => {
+                    if (response.ok) {
+                        return response.blob();
+                    } else {
+                        return response.json().then(json => {
+                            throw new Error(json.error);
+                        });
+                    }
+                })
+                .then(blob => {
+                    saveAs(blob, 'pipeline.yaml');
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
     };
 
     return (

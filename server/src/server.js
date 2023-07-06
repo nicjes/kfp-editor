@@ -3,7 +3,11 @@ const { spawn } = require('child_process');
 
 const app = express();
 
-app.get('/api/kfp/compile', (req, res) => {
+app.use(express.json());
+
+app.post('/api/kfp/compile', (req, res) => {
+    const data = req.body;
+
     const pythonProcess = spawn('python', ['./src/scripts/comparison.py']);
     var d = '';
     var e = '';
