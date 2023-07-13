@@ -1,62 +1,26 @@
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
-import { Handle, NodeProps, Position } from 'reactflow';
+import { ChangeEvent, useEffect } from 'react';
+import { NodeProps } from 'reactflow';
 
 import PythonComponent from '../../models/PythonComponent';
+import ComponentNode from './ComponentNode';
 
-function PythonComponentNode({ data }: NodeProps) {
-    const dialogRef = useRef<HTMLDialogElement>(null);
-    const [savedInputValue, setSavedInputValue] = useState('');
-    const [currentInputValue, setCurrentInputValue] = useState('');
-
-    const handleShowDialog = () => {
-        if (dialogRef.current) {
-            dialogRef.current.showModal();
-        }
-    };
-
-    const handleCloseDialog = () => {
-        if (dialogRef.current) {
-            dialogRef.current.close();
-        }
-    };
-
-    const handleInputChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-        setCurrentInputValue(event.target.value);
-    };
-
-    const handleCancel = () => {
-        setCurrentInputValue(savedInputValue);
-        handleCloseDialog();
-    };
-
-    const handleConfirm = () => {
-        data.component.code = currentInputValue;
-        setSavedInputValue(currentInputValue);
-        handleCloseDialog();
-    };
-
+function PythonComponentNode({ id, data }: NodeProps) {
     useEffect(() => {
         data.component = new PythonComponent('', '');
     }, []);
 
 
+    const renderInputs = (currentInputValues: { [key: string]: string }, handleInputChange: (event: ChangeEvent<HTMLTextAreaElement>) => void) => {
+        return (
+            <>
+                <label htmlFor='codeInput'>Paste your Python Code:</label>
+                <p><textarea id='codeInput' value={currentInputValues['codeInput'] || ''} onChange={handleInputChange} /></p>
+            </>
+        );
+    };
+
     return (
-        <div className="node component" onDoubleClick={handleShowDialog}>
-            <Handle type="target" position={Position.Top} />
-            <p>Python Component</p>
-            <img className='component-icon' src='src\assets\python.png' width={20}></img>
-            <dialog ref={dialogRef} className="nodrag" >
-                <form>
-                    <label htmlFor='codeInput'>Paste your Python Code:</label>
-                    <p><textarea id='codeInput' value={currentInputValue} onChange={handleInputChange} /></p>
-                    <div>
-                        <button onClick={handleCancel} type="button">Cancel</button>
-                        <button onClick={handleConfirm} type="button">Confirm</button>
-                    </div>
-                </form>
-            </dialog>
-            <Handle type="source" position={Position.Bottom} />
-        </div>
+        <ComponentNode id={id} data={data} componentType="Python" renderInputs={renderInputs} />
     );
 }
 

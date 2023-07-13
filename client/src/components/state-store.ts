@@ -22,6 +22,7 @@ import DatasetComponentNode from './nodes/DatasetComponentNode';
 import PythonComponent from '../models/PythonComponent';
 import UrlComponent from '../models/UrlComponent';
 import React from 'react';
+import HelloWorldComponentNode from './nodes/HelloworldComponentNode';
 
 const nodeTypes = {
     comment: CommentNode,
@@ -29,6 +30,7 @@ const nodeTypes = {
     urlComponent: UrlComponentNode,
     yamlComponent: YamlComponentNode,
     datasetComponent: DatasetComponentNode,
+    helloworldComponent: HelloWorldComponentNode
 };
 
 const edgeStyles = {

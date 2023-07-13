@@ -23,10 +23,12 @@ function Sidebar() {
                 <p>Python Component</p>
                 <img className='component-icon' src='src\assets\python.png' width={20}></img>
             </div>
-            <hr />
             <div className="node component hub-node dataset" onDragStart={(event) => onDragStart(event, 'datasetComponent')} draggable>
                 <p>Dataset Component</p>
                 <img className='component-icon' src='src\assets\dataset.png' width={20}></img>
+            </div>
+            <div className="node component hub-node hello" onDragStart={(event) => onDragStart(event, 'helloworldComponent')} draggable>
+                <p>Hello World Component</p>
             </div>
             <hr />
             <div className="node comment hub-node" onDragStart={(event) => onDragStart(event, 'comment')} draggable>

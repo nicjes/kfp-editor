@@ -1,62 +1,26 @@
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
-import { Handle, NodeProps, Position } from 'reactflow';
+import { ChangeEvent, useEffect } from 'react';
+import { NodeProps } from 'reactflow';
 
 import UrlComponent from '../../models/UrlComponent';
+import ComponentNode from './ComponentNode';
 
-function UrlComponentNode({ data }: NodeProps) {
-    const dialogRef = useRef<HTMLDialogElement>(null);
-    const [savedInputValue, setSavedInputValue] = useState('');
-    const [currentInputValue, setCurrentInputValue] = useState('');
-
-    const handleShowDialog = () => {
-        if (dialogRef.current) {
-            dialogRef.current.showModal();
-        }
-    };
-
-    const handleCloseDialog = () => {
-        if (dialogRef.current) {
-            dialogRef.current.close();
-        }
-    };
-
-    const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setCurrentInputValue(event.target.value);
-    };
-
-    const handleCancel = () => {
-        setCurrentInputValue(savedInputValue);
-        handleCloseDialog();
-    };
-
-    const handleConfirm = () => {
-        data.component.url = currentInputValue;
-        setSavedInputValue(currentInputValue);
-        handleCloseDialog();
-    };
-
+function UrlComponentNode({ id, data }: NodeProps) {
     useEffect(() => {
         data.component = new UrlComponent('', '');
     }, []);
 
 
+    const renderInputs = (currentInputValues: { [key: string]: string }, handleInputChange: (event: ChangeEvent<HTMLInputElement>) => void) => {
+        return (
+            <>
+                <label htmlFor="urlInput">Paste your URL:</label>
+                <p><input id="urlInput" value={currentInputValues["urlInput"] || ""} onChange={handleInputChange} /></p>
+            </>
+        );
+    };
+
     return (
-        <div className="node component" onDoubleClick={handleShowDialog}>
-            <Handle type="target" position={Position.Top} />
-            <p>URL Component</p>
-            <img className='component-icon' src='src\assets\url.png' width={20}></img>
-            <dialog ref={dialogRef} className="nodrag" >
-                <form>
-                    <label htmlFor='urlInput'>Paste your URL:</label>
-                    <p><input type='url' id='urlInput' value={currentInputValue} onChange={handleInputChange} /></p>
-                    <div>
-                        <button onClick={handleCancel} type="button">Cancel</button>
-                        <button onClick={handleConfirm} type="button">Confirm</button>
-                    </div>
-                </form>
-            </dialog>
-            <Handle type="source" position={Position.Bottom} />
-        </div>
+        <ComponentNode id={id} data={data} componentType="URL" renderInputs={renderInputs} />
     );
 }
 
