@@ -51,7 +51,7 @@ function ComponentNode({ id, data, componentType, renderInputs }: ComponentNodeP
         <div className="node component" onDoubleClick={handleShowDialog}>
             <Handle type="target" position={Position.Top} />
             <p>{componentType} Component</p>
-            <img className='component-icon' src={`src/assets/${componentType.toLowerCase()}.png`} width={20} />
+            <img className='component-icon' src={`/${componentType.toLowerCase()}.png`} width={20} />
             <dialog ref={dialogRef} className="nodrag" >
                 <form>
                     <InputSelector id={id} update={isDialogOpen} />
