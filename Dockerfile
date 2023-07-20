@@ -1,5 +1,5 @@
 # Stage 1: Build the React Frontend with Vite
-FROM node:18 as FRONTEND_IMAGE
+FROM node:18-alpine as FRONTEND_IMAGE
 
 # Set the client folder as the working directory
 WORKDIR /app/client
@@ -21,7 +21,7 @@ RUN npm run build
 
 
 # Stage 2: Build the Express Backend
-FROM node:18 as BACKEND_IMAGE
+FROM node:18-alpine as BACKEND_IMAGE
 
 # Set the server folder as the working directory
 WORKDIR /app/server
@@ -40,10 +40,13 @@ COPY server .
 
 
 # Stage 3: Create the final production container
-FROM node:18-alpine
+FROM nikolaik/python-nodejs:python3.11-nodejs18-alpine
 
 # Set the app folder as the working directory
 WORKDIR /app
+
+# Install the KFP SDK
+RUN pip3 install kfp==1.8.22
 
 # Copy frontend artifacts from stage 1
 COPY --from=FRONTEND_IMAGE /app/client/dist/ ./client/dist/

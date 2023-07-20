@@ -12,6 +12,10 @@ app.post('/api/kfp/compile', (req, res) => {
     var d = '';
     var e = '';
 
+    pythonProcess.on('error', (error) => {
+        e += error.toString();
+    });
+
     pythonProcess.stdout.on('data', data => {
         d += data.toString();
     });
