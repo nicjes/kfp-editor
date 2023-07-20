@@ -1,8 +1,9 @@
-import { ChangeEvent, useEffect } from 'react';
+import { useEffect } from 'react';
 import { NodeProps } from 'reactflow';
 
 import PythonComponent from '../../models/PythonComponent';
-import ComponentNode from './ComponentNode';
+import ComponentNode, { RenderInputsProps } from './ComponentNode';
+import InputSelector from '../InputSelector';
 
 function PythonComponentNode({ id, data }: NodeProps) {
     useEffect(() => {
@@ -10,17 +11,18 @@ function PythonComponentNode({ id, data }: NodeProps) {
     }, []);
 
 
-    const renderInputs = (currentInputValues: { [key: string]: string }, handleInputChange: (event: ChangeEvent<HTMLTextAreaElement>) => void) => {
+    const renderInputs = ({ currentInputValues, handleInputChange, update }: RenderInputsProps) => {
         return (
             <>
                 <label htmlFor='codeInput'>Paste your Python Code:</label>
-                <p><textarea id='codeInput' value={currentInputValues['codeInput'] || ''} onChange={handleInputChange} /></p>
+                <p><textarea id='codeInput' name='Python' value={currentInputValues['Python'] || ''} onChange={handleInputChange} /></p>
+                <InputSelector name="Python" nodeId={id} update={update} onChange={handleInputChange} />
             </>
         );
     };
 
     return (
-        <ComponentNode id={id} data={data} componentType="Python" renderInputs={renderInputs} />
+        <ComponentNode data={data} componentType="Python" renderInputs={renderInputs} />
     );
 }
 

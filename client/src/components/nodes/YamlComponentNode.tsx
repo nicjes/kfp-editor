@@ -1,8 +1,9 @@
-import { ChangeEvent, useEffect } from 'react';
+import { useEffect } from 'react';
 import { NodeProps } from 'reactflow';
 
 import YamlComponent from '../../models/YamlComponent';
-import ComponentNode from './ComponentNode';
+import ComponentNode, { RenderInputsProps } from './ComponentNode';
+import InputSelector from '../InputSelector';
 
 function YamlComponentNode({ id, data }: NodeProps) {
     useEffect(() => {
@@ -10,17 +11,18 @@ function YamlComponentNode({ id, data }: NodeProps) {
     }, []);
 
 
-    const renderInputs = (currentInputValues: { [key: string]: string }, handleInputChange: (event: ChangeEvent<HTMLInputElement>) => void) => {
+    const renderInputs = ({ currentInputValues, handleInputChange, update }: RenderInputsProps) => {
         return (
             <>
                 <label htmlFor='fileInput'>Select your Component YAML File:</label>
-                <p><input type='file' id='fileInput' value={currentInputValues['fileInput'] || ''} accept='.yaml' onChange={handleInputChange} /></p>
+                <p><input type='file' id='fileInput' name='YAML' value={currentInputValues['YAML'] || ''} accept='.yaml' onChange={handleInputChange} /></p>
+                <InputSelector name="YAML" nodeId={id} update={update} onChange={handleInputChange} />
             </>
         );
     };
 
     return (
-        <ComponentNode id={id} data={data} componentType="YAML" renderInputs={renderInputs} />
+        <ComponentNode data={data} componentType="YAML" renderInputs={renderInputs} />
     );
 }
 

@@ -1,15 +1,21 @@
 import { ChangeEvent, useRef, useState } from 'react';
 import { Handle, Position } from 'reactflow';
-import InputSelector from '../InputSelector';
 
-interface ComponentNodeProps {
-    id: string;
-    data: any;
-    componentType: string;
-    renderInputs: (currentInputValues: { [key: string]: string }, handleInputChange: (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => void) => JSX.Element;
+type InputChangeEvent = ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLSelectElement>;
+
+export interface RenderInputsProps {
+    currentInputValues: { [key: string]: string };
+    handleInputChange: (event: InputChangeEvent) => void;
+    update: boolean;
 }
 
-function ComponentNode({ id, data, componentType, renderInputs }: ComponentNodeProps) {
+interface ComponentNodeProps {
+    data: any;
+    componentType: string;
+    renderInputs: (props: RenderInputsProps) => JSX.Element;
+}
+
+function ComponentNode({ data, componentType, renderInputs }: ComponentNodeProps) {
     const dialogRef = useRef<HTMLDialogElement>(null);
     const [savedInputValues, setSavedInputValues] = useState<{ [key: string]: string }>({});
     const [currentInputValues, setCurrentInputValues] = useState<{ [key: string]: string }>({});
@@ -29,10 +35,10 @@ function ComponentNode({ id, data, componentType, renderInputs }: ComponentNodeP
         }
     };
 
-    const handleInputChange = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
+    const handleInputChange = (event: InputChangeEvent) => {
         setCurrentInputValues((prevInputValues) => ({
             ...prevInputValues,
-            [event.target.id]: event.target.value,
+            [event.target.name]: event.target.value,
         }));
     };
 
@@ -47,15 +53,24 @@ function ComponentNode({ id, data, componentType, renderInputs }: ComponentNodeP
         handleCloseDialog();
     };
 
+    const renderImage = () => {
+        const img = new Image()
+        img.src = `/${componentType.toLowerCase()}.png`;
+        if (img.complete) {
+            return <img className='component-icon' src={img.src} width={20} />;
+        } else {
+            return <></>;
+        }
+    }
+
     return (
         <div className="node component" onDoubleClick={handleShowDialog}>
             <Handle type="target" position={Position.Top} />
             <p>{componentType} Component</p>
-            <img className='component-icon' src={`/${componentType.toLowerCase()}.png`} width={20} />
+            {renderImage()}
             <dialog ref={dialogRef} className="nodrag" >
                 <form>
-                    <InputSelector id={id} update={isDialogOpen} />
-                    {renderInputs(currentInputValues, handleInputChange)} { }
+                    {renderInputs({ currentInputValues, handleInputChange, update: isDialogOpen })} { }
                     <div>
                         <button onClick={handleCancel} type="button">Cancel</button>
                         <button onClick={handleConfirm} type="button">Confirm</button>

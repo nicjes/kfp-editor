@@ -1,8 +1,9 @@
-import { ChangeEvent, useEffect } from 'react';
+import { useEffect } from 'react';
 import { NodeProps } from 'reactflow';
 
 import DatasetComponent from '../../models/DatasetComponent';
-import ComponentNode from './ComponentNode';
+import ComponentNode, { RenderInputsProps } from './ComponentNode';
+import InputSelector from '../InputSelector';
 
 function DatasetComponentNode({ id, data }: NodeProps) {
     useEffect(() => {
@@ -10,17 +11,18 @@ function DatasetComponentNode({ id, data }: NodeProps) {
     }, []);
 
 
-    const renderInputs = (currentInputValues: { [key: string]: string }, handleInputChange: (event: ChangeEvent<HTMLInputElement>) => void) => {
+    const renderInputs = ({ currentInputValues, handleInputChange, update }: RenderInputsProps) => {
         return (
             <>
                 <label htmlFor='fileInput'>Select your Dataset:</label>
-                <p><input type='file' id='fileInput' value={currentInputValues['fileInput'] || ''} accept='.csv' onChange={handleInputChange} /></p>
+                <p><input type='file' id='fileInput' name='Dataset' value={currentInputValues['Dataset'] || ''} accept='.csv' onChange={handleInputChange} /></p>
+                <InputSelector name="Dataset" nodeId={id} update={update} onChange={handleInputChange} />
             </>
         );
     };
 
     return (
-        <ComponentNode id={id} data={data} componentType="Dataset" renderInputs={renderInputs} />
+        <ComponentNode data={data} componentType="Dataset" renderInputs={renderInputs} />
     );
 }
 

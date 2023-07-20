@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 
 import useStore from "./state-store";
 
@@ -7,7 +7,14 @@ interface ReceivedData {
     data: { [key: string]: string };
 }
 
-function InputSelector({ id, update }: { id: string; update: boolean }) {
+interface InputSelectorProps {
+    name: string;
+    nodeId: string;
+    update: boolean;
+    onChange: (event: ChangeEvent<HTMLSelectElement>) => void;
+}
+
+function InputSelector({ name, nodeId, update, onChange }: InputSelectorProps) {
     const [receivedData, setReceivedData] = useState<ReceivedData[]>([]);
 
     const { reactFlowInstance } = useStore();
@@ -17,7 +24,7 @@ function InputSelector({ id, update }: { id: string; update: boolean }) {
 
         if (flow) {
             const connectedNodes = flow.edges
-                .filter((edge) => edge.target === id)
+                .filter((edge) => edge.target === nodeId)
                 .map((edge) => edge.source);
 
             const updatedReceivedData: ReceivedData[] = [];
@@ -44,14 +51,18 @@ function InputSelector({ id, update }: { id: string; update: boolean }) {
 
     return (
         <div>
-            {receivedData.map((item) => (
-                <div key={item.nodeId}>
-                    {item.data &&
-                        Object.entries(item.data).map(([key, value]) => (
-                            <p key={key}>{`${key}: ${value}`}</p>
-                        ))}
-                </div>
-            ))}
+            <select name={name} onChange={onChange}>
+                {receivedData.map((item) => (
+                    <optgroup key={item.nodeId} label={item.nodeId}>
+                        {item.data &&
+                            Object.entries(item.data).map(([key, value]) => (
+                                <option key={key} value={value}>
+                                    {`${key}: ${value}`}
+                                </option>
+                            ))}
+                    </optgroup>
+                ))}
+            </select>
             <hr />
         </div>
     );

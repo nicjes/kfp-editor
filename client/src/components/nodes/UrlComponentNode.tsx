@@ -1,8 +1,9 @@
-import { ChangeEvent, useEffect } from 'react';
+import { useEffect } from 'react';
 import { NodeProps } from 'reactflow';
 
 import UrlComponent from '../../models/UrlComponent';
-import ComponentNode from './ComponentNode';
+import ComponentNode, { RenderInputsProps } from './ComponentNode';
+import InputSelector from '../InputSelector';
 
 function UrlComponentNode({ id, data }: NodeProps) {
     useEffect(() => {
@@ -10,17 +11,18 @@ function UrlComponentNode({ id, data }: NodeProps) {
     }, []);
 
 
-    const renderInputs = (currentInputValues: { [key: string]: string }, handleInputChange: (event: ChangeEvent<HTMLInputElement>) => void) => {
+    const renderInputs = ({ currentInputValues, handleInputChange, update }: RenderInputsProps) => {
         return (
             <>
                 <label htmlFor="urlInput">Paste your URL:</label>
-                <p><input id="urlInput" value={currentInputValues["urlInput"] || ""} onChange={handleInputChange} /></p>
+                <p><input id="urlInput" name="URL" value={currentInputValues["URL"] || ""} onChange={handleInputChange} /></p>
+                <InputSelector name="URL" nodeId={id} update={update} onChange={handleInputChange} />
             </>
         );
     };
 
     return (
-        <ComponentNode id={id} data={data} componentType="URL" renderInputs={renderInputs} />
+        <ComponentNode data={data} componentType="URL" renderInputs={renderInputs} />
     );
 }
 
