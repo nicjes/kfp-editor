@@ -11,7 +11,7 @@ interface InputSelectorProps {
     name: string;
     nodeId: string;
     update: boolean;
-    onChange: (event: ChangeEvent<HTMLSelectElement>) => void;
+    onChange: (event: ChangeEvent<HTMLButtonElement>) => void;
 }
 
 function InputSelector({ name, nodeId, update, onChange }: InputSelectorProps) {
@@ -49,20 +49,23 @@ function InputSelector({ name, nodeId, update, onChange }: InputSelectorProps) {
         }
     }, [update]);
 
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        event.preventDefault();
+        onChange(event as unknown as ChangeEvent<HTMLButtonElement>);
+    };
+
     return (
         <div>
-            <select name={name} onChange={onChange}>
-                {receivedData.map((item) => (
-                    <optgroup key={item.nodeId} label={item.nodeId}>
-                        {item.data &&
-                            Object.entries(item.data).map(([key, value]) => (
-                                <option key={key} value={value}>
-                                    {`${key}: ${value}`}
-                                </option>
-                            ))}
-                    </optgroup>
-                ))}
-            </select>
+            {receivedData.map((item) => (
+                <div key={item.nodeId}>
+                    {item.data &&
+                        Object.entries(item.data).map(([key, value]) => (
+                            <button key={key} name={name} value={value} onClick={handleClick}>
+                                {`${key}: ${value}`}
+                            </button>
+                        ))}
+                </div>
+            ))}
             <hr />
         </div>
     );

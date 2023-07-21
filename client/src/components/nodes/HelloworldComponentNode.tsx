@@ -18,7 +18,7 @@ function HelloworldComponentNode({ id, data }: NodeProps) {
                 <p><input id="helloInput" name="Hello" value={currentInputValues["Hello"] || ""} onChange={handleInputChange} /></p>
                 <InputSelector name="Hello" nodeId={id} update={update} onChange={handleInputChange} />
                 <label htmlFor="secondInput">...</label>
-                <p><input id="secondInput" value={currentInputValues["secondInput"] || ""} onChange={handleInputChange} /></p>
+                <p><input id="secondInput" name="Second Hello" value={currentInputValues["Second Hello"] || ""} onChange={handleInputChange} /></p>
                 <InputSelector name="Second Hello" nodeId={id} update={update} onChange={handleInputChange} />
             </>
         );
