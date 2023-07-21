@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import useStore from "./state-store";
 
@@ -8,13 +8,13 @@ interface ReceivedData {
 }
 
 interface InputSelectorProps {
-    name: string;
+    field: string;
     nodeId: string;
     update: boolean;
-    onChange: (event: ChangeEvent<HTMLButtonElement>) => void;
+    onClick: (item: { field: string; value: string }) => void;
 }
 
-function InputSelector({ name, nodeId, update, onChange }: InputSelectorProps) {
+function InputSelector({ field, nodeId, update, onClick }: InputSelectorProps) {
     const [receivedData, setReceivedData] = useState<ReceivedData[]>([]);
 
     const { reactFlowInstance } = useStore();
@@ -49,9 +49,9 @@ function InputSelector({ name, nodeId, update, onChange }: InputSelectorProps) {
         }
     }, [update]);
 
-    const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const handleClick = (event: React.MouseEvent, item: { field: string; value: string }) => {
         event.preventDefault();
-        onChange(event as unknown as ChangeEvent<HTMLButtonElement>);
+        onClick(item);
     };
 
     return (
@@ -60,7 +60,7 @@ function InputSelector({ name, nodeId, update, onChange }: InputSelectorProps) {
                 <div key={item.nodeId}>
                     {item.data &&
                         Object.entries(item.data).map(([key, value]) => (
-                            <button key={key} name={name} value={value} onClick={handleClick}>
+                            <button key={key} id={field} name={field} value={value} onClick={(e) => handleClick(e, { field, value })}>
                                 {`${key}: ${value}`}
                             </button>
                         ))}

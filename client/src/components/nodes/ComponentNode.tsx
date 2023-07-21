@@ -1,11 +1,9 @@
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Handle, Position } from 'reactflow';
-
-type InputChangeEvent = ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLButtonElement>;
 
 export interface RenderInputsProps {
     currentInputValues: { [key: string]: string };
-    handleInputChange: (event: InputChangeEvent) => void;
+    handleInputChange: (item: { field: string; value: string }) => void;
     update: boolean;
 }
 
@@ -35,10 +33,10 @@ function ComponentNode({ data, componentType, renderInputs }: ComponentNodeProps
         }
     };
 
-    const handleInputChange = (event: InputChangeEvent) => {
+    const handleInputChange = (item: { field: string; value: string }) => {
         setCurrentInputValues((prevInputValues) => ({
             ...prevInputValues,
-            [event.target.name]: event.target.value,
+            [item.field]: item.value,
         }));
     };
 
