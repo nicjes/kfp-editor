@@ -1,4 +1,4 @@
-import { ChangeEvent, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { Handle, Position } from 'reactflow';
 
 type InputChangeEvent = ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLSelectElement>;
@@ -53,24 +53,19 @@ function ComponentNode({ data, componentType, renderInputs }: ComponentNodeProps
         handleCloseDialog();
     };
 
-    const renderImage = () => {
-        const img = new Image()
-        img.src = `/${componentType.toLowerCase()}.png`;
-        if (img.complete) {
-            return <img className='component-icon' src={img.src} width={20} />;
-        } else {
-            return <></>;
-        }
-    }
-
     return (
         <div className="node component" onDoubleClick={handleShowDialog}>
             <Handle type="target" position={Position.Top} />
             <p>{componentType} Component</p>
-            {renderImage()}
+            <img
+                className='component-icon'
+                src={`/${componentType.toLowerCase()}.png`}
+                width={20}
+                onError={(e) => e.currentTarget.style.display = 'none'}
+            />
             <dialog ref={dialogRef} className="nodrag" >
                 <form>
-                    {renderInputs({ currentInputValues, handleInputChange, update: isDialogOpen })} { }
+                    {renderInputs({ currentInputValues, handleInputChange, update: isDialogOpen })}
                     <div>
                         <button onClick={handleCancel} type="button">Cancel</button>
                         <button onClick={handleConfirm} type="button">Confirm</button>
