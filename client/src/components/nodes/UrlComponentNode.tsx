@@ -11,12 +11,12 @@ function UrlComponentNode({ id, data }: NodeProps) {
     }, []);
 
 
-    const renderInputs = ({ currentInputValues, handleInputChange, update }: RenderInputsProps) => {
+    const renderInputs = ({ currentInputValues, handleInputChange, extractInput, update }: RenderInputsProps) => {
         return (
             <>
                 <label htmlFor="urlInput">Paste your URL:</label>
-                <p><input id="urlInput" name="URL" value={currentInputValues["URL"] || ""} onChange={handleInputChange} /></p>
-                <InputSelector name="URL" nodeId={id} update={update} onChange={handleInputChange} />
+                <p><input id="urlInput" name="URL" value={currentInputValues["URL"] || ""} onChange={extractInput} /></p>
+                <InputSelector field="URL" nodeId={id} update={update} onClick={handleInputChange} />
             </>
         );
     };

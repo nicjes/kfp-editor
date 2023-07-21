@@ -11,12 +11,12 @@ function PythonComponentNode({ id, data }: NodeProps) {
     }, []);
 
 
-    const renderInputs = ({ currentInputValues, handleInputChange, update }: RenderInputsProps) => {
+    const renderInputs = ({ currentInputValues, handleInputChange, extractInput, update }: RenderInputsProps) => {
         return (
             <>
                 <label htmlFor='codeInput'>Paste your Python Code:</label>
-                <p><textarea id='codeInput' name='Python' value={currentInputValues['Python'] || ''} onChange={handleInputChange} /></p>
-                <InputSelector name="Python" nodeId={id} update={update} onChange={handleInputChange} />
+                <p><textarea id='codeInput' name='Python' value={currentInputValues['Python'] || ''} onChange={extractInput} /></p>
+                <InputSelector field="Python" nodeId={id} update={update} onClick={handleInputChange} />
             </>
         );
     };

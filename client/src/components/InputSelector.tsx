@@ -60,7 +60,7 @@ function InputSelector({ field, nodeId, update, onClick }: InputSelectorProps) {
                 <div key={item.nodeId}>
                     {item.data &&
                         Object.entries(item.data).map(([key, value]) => (
-                            <button key={key} id={field} name={field} value={value} onClick={(e) => handleClick(e, { field, value })}>
+                            <button key={key} name={field} value={value} onClick={(e) => handleClick(e, { field, value })}>
                                 {`${key}: ${value}`}
                             </button>
                         ))}

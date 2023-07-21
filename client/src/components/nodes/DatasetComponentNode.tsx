@@ -11,12 +11,12 @@ function DatasetComponentNode({ id, data }: NodeProps) {
     }, []);
 
 
-    const renderInputs = ({ currentInputValues, handleInputChange, update }: RenderInputsProps) => {
+    const renderInputs = ({ currentInputValues, handleInputChange, extractInput, update }: RenderInputsProps) => {
         return (
             <>
                 <label htmlFor='fileInput'>Select your Dataset:</label>
-                <p><input type='file' id='fileInput' name='Dataset' value={currentInputValues['Dataset'] || ''} accept='.csv' onChange={handleInputChange} /></p>
-                <InputSelector name="Dataset" nodeId={id} update={update} onChange={handleInputChange} />
+                <p><input type='file' id='fileInput' name='Dataset' value={currentInputValues['Dataset'] || ''} accept='.csv' onChange={extractInput} /></p>
+                <InputSelector field="Dataset" nodeId={id} update={update} onClick={handleInputChange} />
             </>
         );
     };

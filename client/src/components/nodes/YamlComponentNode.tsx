@@ -11,12 +11,12 @@ function YamlComponentNode({ id, data }: NodeProps) {
     }, []);
 
 
-    const renderInputs = ({ currentInputValues, handleInputChange, update }: RenderInputsProps) => {
+    const renderInputs = ({ currentInputValues, handleInputChange, extractInput, update }: RenderInputsProps) => {
         return (
             <>
                 <label htmlFor='fileInput'>Select your Component YAML File:</label>
-                <p><input type='file' id='fileInput' name='YAML' value={currentInputValues['YAML'] || ''} accept='.yaml' onChange={handleInputChange} /></p>
-                <InputSelector name="YAML" nodeId={id} update={update} onChange={handleInputChange} />
+                <p><input type='file' id='fileInput' name='YAML' value={currentInputValues['YAML'] || ''} accept='.yaml' onChange={extractInput} /></p>
+                <InputSelector field="YAML" nodeId={id} update={update} onClick={handleInputChange} />
             </>
         );
     };

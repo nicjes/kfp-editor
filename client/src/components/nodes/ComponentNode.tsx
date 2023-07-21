@@ -1,9 +1,10 @@
-import { useRef, useState } from 'react';
+import { ChangeEvent, useRef, useState } from 'react';
 import { Handle, Position } from 'reactflow';
 
 export interface RenderInputsProps {
     currentInputValues: { [key: string]: string };
     handleInputChange: (item: { field: string; value: string }) => void;
+    extractInput: (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => void;
     update: boolean;
 }
 
@@ -33,13 +34,6 @@ function ComponentNode({ data, componentType, renderInputs }: ComponentNodeProps
         }
     };
 
-    const handleInputChange = (item: { field: string; value: string }) => {
-        setCurrentInputValues((prevInputValues) => ({
-            ...prevInputValues,
-            [item.field]: item.value,
-        }));
-    };
-
     const handleCancel = () => {
         setCurrentInputValues(savedInputValues);
         handleCloseDialog();
@@ -49,6 +43,17 @@ function ComponentNode({ data, componentType, renderInputs }: ComponentNodeProps
         data.component.input = currentInputValues;
         setSavedInputValues(currentInputValues);
         handleCloseDialog();
+    };
+
+    const handleInputChange = (item: { field: string; value: string }) => {
+        setCurrentInputValues((prevInputValues) => ({
+            ...prevInputValues,
+            [item.field]: item.value,
+        }));
+    };
+
+    const extractInput = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
+        handleInputChange({ field: event.target.name, value: event.target.value });
     };
 
     return (
@@ -63,7 +68,7 @@ function ComponentNode({ data, componentType, renderInputs }: ComponentNodeProps
             />
             <dialog ref={dialogRef} className="nodrag" >
                 <form>
-                    {renderInputs({ currentInputValues, handleInputChange, update: isDialogOpen })}
+                    {renderInputs({ currentInputValues, handleInputChange, extractInput, update: isDialogOpen })}
                     <div>
                         <button onClick={handleCancel} type="button">Cancel</button>
                         <button onClick={handleConfirm} type="button">Confirm</button>

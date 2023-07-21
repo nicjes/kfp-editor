@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect } from 'react';
+import { useEffect } from 'react';
 import { NodeProps } from 'reactflow';
 
 import HelloworldComponent from '../../models/HelloworldComponent';
@@ -11,11 +11,7 @@ function HelloworldComponentNode({ id, data }: NodeProps) {
     }, []);
 
 
-    const renderInputs = ({ currentInputValues, handleInputChange, update }: RenderInputsProps) => {
-        const extractInput = (event: ChangeEvent<HTMLInputElement>) => {
-            handleInputChange({ field: event.target.name, value: event.target.value });
-        };
-
+    const renderInputs = ({ currentInputValues, handleInputChange, extractInput, update }: RenderInputsProps) => {
         return (
             <>
                 <label htmlFor="helloInput">Hello ...</label>
