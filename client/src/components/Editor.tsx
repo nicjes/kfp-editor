@@ -6,8 +6,7 @@ import ReactFlow, {
 } from 'reactflow';
 import Sidebar from './Sidebar';
 import PipelineExporter from './PipelineExporter';
-import PipelineSaver from './PipelineSaver';
-import PipelineRestorer from './PipelineRestorer';
+import PipelineLoader from './PipelineLoader';
 
 import { shallow } from 'zustand/shallow';
 
@@ -77,8 +76,7 @@ function Editor() {
                             <PipelineExporter />
                         </Panel>
                         <Panel position="top-right">
-                            <PipelineSaver />
-                            <PipelineRestorer />
+                            <PipelineLoader />
                         </Panel>
                         <Controls showFitView={false} showInteractive={false} />
                     </ReactFlow>

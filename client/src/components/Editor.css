@@ -31,6 +31,14 @@
     display: inline;
 }
 
+.react-flow__controls-button:hover svg {
+    fill: var(--blue-primary);
+}
+
+.react-flow__controls-button:hover {
+    background-color: #fafafa;
+}
+
 .react-flow__controls svg {
     height: 100%;
 }
@@ -78,12 +86,13 @@ dialog {
 
 button {
     cursor: pointer;
+    background-color: var(--blue-primary);
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border: 0;
+    font-size: 0.8rem;
 }
 
-.panel-button {
-    background-color: #fefefe;
-    padding: 0.5rem 1rem;
-    border: solid #eee;
-    cursor: pointer;
-    font-size: 0.8rem;
+button:hover {
+    background-color: var(--blue-secondary);
 }

@@ -57,7 +57,7 @@ function ComponentNode({ data, componentType, renderInputs }: ComponentNodeProps
     };
 
     return (
-        <div className="node component" onDoubleClick={handleShowDialog}>
+        <div className={'node component ' + componentType.toLowerCase().replace(/ /g, '')} onDoubleClick={handleShowDialog}>
             <Handle type="target" position={Position.Top} />
             <p>{componentType} Component</p>
             <img

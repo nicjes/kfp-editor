@@ -2,9 +2,9 @@ import './Header.css'
 
 function Header() {
     return (
-        <div className='header'>
-            <h2>Visual Editor for Kubeflow Pipelines</h2>
-        </div>
+        <header className='header-global'>
+            <h2 id='header-global-title'>Visual Editor for Kubeflow Pipelines</h2>
+        </header>
     )
 }
 
