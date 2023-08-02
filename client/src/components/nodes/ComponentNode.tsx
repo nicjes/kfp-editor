@@ -62,7 +62,7 @@ function ComponentNode({ data, componentType, renderInputs }: ComponentNodeProps
             <p>{componentType} Component</p>
             <img
                 className='component-icon'
-                src={`/${componentType.toLowerCase()}.png`}
+                src={`./${componentType.toLowerCase()}.png`}
                 width={20}
                 onError={(e) => e.currentTarget.style.display = 'none'}
             />

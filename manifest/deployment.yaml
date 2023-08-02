@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: kfp-editor
+  name: kfp-editor
+  namespace: kubeflow
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kfp-editor
+  template:
+    metadata:
+      labels:
+        app: kfp-editor
+    spec:
+      containers:
+      - image: kfp-editor:dev
+        name: main

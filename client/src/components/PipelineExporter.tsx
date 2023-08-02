@@ -10,7 +10,7 @@ function PipelineExporter() {
             const flow = reactFlowInstance.toObject();
             const dto = JSON.stringify(flow);
 
-            fetch('/api/kfp/compile', {
+            fetch('./api/kfp/compile', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
