@@ -32,7 +32,7 @@
 }
 
 .react-flow__controls-button:hover svg {
-    fill: var(--blue-primary);
+    fill: var(--blue-secondary);
 }
 
 .react-flow__controls-button:hover {

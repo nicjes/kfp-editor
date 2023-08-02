@@ -6,6 +6,6 @@
     max-height: 3.5rem;
     border-bottom: 3px solid #e6e6e6;
     white-space: nowrap;
-    background-color: var(--blue-bg);
+    background-color: var(--blue-primary);
     color: #fff;
 }

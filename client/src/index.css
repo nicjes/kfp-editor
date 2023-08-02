@@ -1,8 +1,7 @@
 :root {
   font-size: 100%;
-  --blue-bg: #213d7a;
-  --blue-primary: #0049b5;
-  --blue-secondary: #1a73e8;
+  --blue-primary: #0a3b71;
+  --blue-secondary: #007dfc;
 }
 
 * {
