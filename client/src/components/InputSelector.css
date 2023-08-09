@@ -1,0 +1,20 @@
+.selector-container {
+    margin-bottom: 2rem;
+}
+
+.selector-node {
+    display: flex;
+}
+
+.selector-item {
+    cursor: pointer;
+    background-color: #eee;
+    border: 2px solid #ddd;
+    border-radius: 1em;
+    padding: 0.3rem;
+    margin: 0.3rem;
+}
+
+.selector-item:hover {
+    background-color: #ddd;
+}

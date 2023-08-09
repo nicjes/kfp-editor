@@ -1,5 +1,6 @@
-import { ChangeEvent, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { Handle, Position } from 'reactflow';
+import ComponentDialog from '../ComponentDialog';
 
 export interface RenderInputsProps {
     currentInputValues: { [key: string]: string };
@@ -16,8 +17,6 @@ interface ComponentNodeProps {
 
 function ComponentNode({ data, componentType, renderInputs }: ComponentNodeProps) {
     const dialogRef = useRef<HTMLDialogElement>(null);
-    const [savedInputValues, setSavedInputValues] = useState<{ [key: string]: string }>({});
-    const [currentInputValues, setCurrentInputValues] = useState<{ [key: string]: string }>({});
     const [isDialogOpen, setIsDialogOpen] = useState(false);
 
     const handleShowDialog = () => {
@@ -34,27 +33,9 @@ function ComponentNode({ data, componentType, renderInputs }: ComponentNodeProps
         }
     };
 
-    const handleCancel = () => {
-        setCurrentInputValues(savedInputValues);
-        handleCloseDialog();
-    };
-
-    const handleConfirm = () => {
-        data.component.input = currentInputValues;
-        setSavedInputValues(currentInputValues);
-        handleCloseDialog();
-    };
-
-    const handleInputChange = (item: { field: string; value: string }) => {
-        setCurrentInputValues((prevInputValues) => ({
-            ...prevInputValues,
-            [item.field]: item.value,
-        }));
-    };
-
-    const extractInput = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
-        handleInputChange({ field: event.target.name, value: event.target.value });
-    };
+    useEffect(() => {
+        data.type = componentType;
+    }, []);
 
     return (
         <div className={'node component ' + componentType.toLowerCase().replace(/ /g, '')} onDoubleClick={handleShowDialog}>
@@ -66,15 +47,13 @@ function ComponentNode({ data, componentType, renderInputs }: ComponentNodeProps
                 width={20}
                 onError={(e) => e.currentTarget.style.display = 'none'}
             />
-            <dialog ref={dialogRef} className="nodrag" >
-                <form>
-                    {renderInputs({ currentInputValues, handleInputChange, extractInput, update: isDialogOpen })}
-                    <div>
-                        <button onClick={handleCancel} type="button">Cancel</button>
-                        <button onClick={handleConfirm} type="button">Confirm</button>
-                    </div>
-                </form>
-            </dialog>
+            <ComponentDialog
+                data={data}
+                dialogRef={dialogRef}
+                renderInputs={renderInputs}
+                handleCloseDialog={handleCloseDialog}
+                update={isDialogOpen}
+            />
             <Handle type="source" position={Position.Bottom} />
         </div>
     );

@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+import './InputSelector.css';
+
 import useStore from "./state-store";
 
 interface ReceivedData {
@@ -49,24 +51,19 @@ function InputSelector({ field, nodeId, update, onClick }: InputSelectorProps) {
         }
     }, [update]);
 
-    const handleClick = (event: React.MouseEvent, item: { field: string; value: string }) => {
-        event.preventDefault();
-        onClick(item);
-    };
-
     return (
-        <div>
+        <div className="selector-container">
             {receivedData.map((item) => (
-                <div key={item.nodeId}>
+                <div className="selector-node" key={item.nodeId}>
+                    <p>{item.nodeId}: </p>
                     {item.data &&
                         Object.entries(item.data).map(([key, value]) => (
-                            <button key={key} name={field} value={value} onClick={(e) => handleClick(e, { field, value })}>
+                            <span className="selector-item" key={key} onClick={() => onClick({ field, value })}>
                                 {`${key}: ${value}`}
-                            </button>
+                            </span>
                         ))}
                 </div>
             ))}
-            <hr />
         </div>
     );
 }

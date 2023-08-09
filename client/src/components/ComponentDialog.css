@@ -1,0 +1,23 @@
+::backdrop {
+    background-color: rgba(0, 0, 0, 0.25);
+}
+
+.component-dialog {
+    border: 2px solid #eee;
+    border-radius: 6px;
+}
+
+.dialog-form {
+    display: flex;
+    flex-direction: column;
+    margin: 0.5rem;
+}
+
+.dialog-inputs {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.dialog-buttons button {
+    margin: 0.2rem 0.3rem 0 0;
+}
