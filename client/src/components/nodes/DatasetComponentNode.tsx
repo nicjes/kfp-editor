@@ -8,6 +8,7 @@ import InputSelector from '../InputSelector';
 function DatasetComponentNode({ id, data }: NodeProps) {
     useEffect(() => {
         data.component = new DatasetComponent('', '');
+        data.description = 'This component can be used to load a dataset from a CSV file.';
     }, []);
 
 

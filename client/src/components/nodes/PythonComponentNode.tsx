@@ -8,6 +8,7 @@ import InputSelector from '../InputSelector';
 function PythonComponentNode({ id, data }: NodeProps) {
     useEffect(() => {
         data.component = new PythonComponent('', '');
+        data.description = 'This component can be used to implement custom Python code.';
     }, []);
 
 

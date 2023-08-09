@@ -8,6 +8,7 @@ import InputSelector from '../InputSelector';
 function HelloworldComponentNode({ id, data }: NodeProps) {
     useEffect(() => {
         data.component = new HelloworldComponent('', '');
+        data.description = 'This is a Hello World component.';
     }, []);
 
 

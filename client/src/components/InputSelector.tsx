@@ -33,10 +33,10 @@ function InputSelector({ field, nodeId, update, onClick }: InputSelectorProps) {
 
             for (const nodeId of connectedNodes) {
                 const node = flow.nodes.find((node) => node.id === nodeId);
-                if (node && node.data && node.data.component && node.data.component.input) {
+                if (node && node.data && node.data.input) {
                     updatedReceivedData.push({
                         nodeId: nodeId,
-                        data: node.data.component.input,
+                        data: node.data.input,
                     });
                 }
             }

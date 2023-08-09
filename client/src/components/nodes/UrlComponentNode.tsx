@@ -8,6 +8,7 @@ import InputSelector from '../InputSelector';
 function UrlComponentNode({ id, data }: NodeProps) {
     useEffect(() => {
         data.component = new UrlComponent('', '');
+        data.description = 'This component can be used to load another component from a URL.';
     }, []);
 
 

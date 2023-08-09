@@ -22,7 +22,7 @@ function ComponentDialog({ data, dialogRef, renderInputs, handleCloseDialog, upd
     };
 
     const handleConfirm = () => {
-        data.component.input = currentInputValues;
+        data.input = currentInputValues;
         setSavedInputValues(currentInputValues);
         handleCloseDialog();
     };
@@ -41,6 +41,9 @@ function ComponentDialog({ data, dialogRef, renderInputs, handleCloseDialog, upd
     return (
         <dialog ref={dialogRef} className="component-dialog nodrag" >
             <h2>{data.type} Component</h2>
+            <div className="dialog-description">
+                <p>{data.description}</p>
+            </div>
             <form className="dialog-form">
                 <div className="dialog-inputs">
                     {renderInputs({ currentInputValues, handleInputChange, extractInput, update })}

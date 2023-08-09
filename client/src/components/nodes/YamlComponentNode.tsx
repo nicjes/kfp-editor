@@ -8,6 +8,7 @@ import InputSelector from '../InputSelector';
 function YamlComponentNode({ id, data }: NodeProps) {
     useEffect(() => {
         data.component = new YamlComponent('', '');
+        data.description = 'This component can be used to load another component from a YAML file.';
     }, []);
 
 
