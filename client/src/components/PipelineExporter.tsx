@@ -2,9 +2,15 @@ import { saveAs } from 'file-saver';
 
 import useStore from './state-store';
 
+/**
+ * Component for exporting the current pipeline as a Kubeflow YAML file.
+ */
 function PipelineExporter() {
     const reactFlowInstance = useStore((state) => state.reactFlowInstance);
 
+    /**
+     * Handles the export of the pipeline as a Kubeflow YAML file.
+     */
     const onExportPipeline = () => {
         if (reactFlowInstance) {
             const flow = reactFlowInstance.toObject();

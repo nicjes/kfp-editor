@@ -5,13 +5,21 @@ import DatasetComponent from '../../models/DatasetComponent';
 import ComponentNode, { RenderInputsProps } from './ComponentNode';
 import InputSelector from '../InputSelector';
 
+/**
+ * React component representing a node for a dataset component.
+ * @param {NodeProps} id - NodeProps containing the node's ID and data.
+ */
 function DatasetComponentNode({ id, data }: NodeProps) {
     useEffect(() => {
         data.component = new DatasetComponent('', '');
         data.description = 'This component can be used to load a dataset from a CSV file.';
     }, []);
 
-
+    /**
+     * Render input fields for the DatasetComponentNode.
+     * @param {RenderInputsProps} param0 - RenderInputsProps containing input-related functions and data.
+     * @returns {JSX.Element} - JSX element representing the input fields.
+     */
     const renderInputs = ({ currentInputValues, handleInputChange, extractInput, update }: RenderInputsProps) => {
         return (
             <>

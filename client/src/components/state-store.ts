@@ -14,41 +14,104 @@ import {
     updateEdge,
     ReactFlowInstance,
 } from 'reactflow';
+
 import CommentNode from './nodes/CommentNode';
 import PythonComponentNode from './nodes/PythonComponentNode';
 import UrlComponentNode from './nodes/UrlComponentNode';
 import YamlComponentNode from './nodes/YamlComponentNode';
 import DatasetComponentNode from './nodes/DatasetComponentNode';
+
 import PythonComponent from '../models/PythonComponent';
 import UrlComponent from '../models/UrlComponent';
+
 import React from 'react';
 import HelloWorldComponentNode from './nodes/HelloworldComponentNode';
 
+/**
+ * Defines custom node types and edge styles.
+ */
 const nodeTypes = {
     comment: CommentNode,
     pythonComponent: PythonComponentNode,
     urlComponent: UrlComponentNode,
     yamlComponent: YamlComponentNode,
     datasetComponent: DatasetComponentNode,
-    helloworldComponent: HelloWorldComponentNode
+    helloworldComponent: HelloWorldComponentNode,
 };
 
+/**
+ * Defines styles for different types of edges.
+ */
 const edgeStyles = {
-    componentEdge: { type: 'smoothstep', style: { strokeWidth: 3 }, markerEnd: { type: MarkerType.ArrowClosed } },
-    commentEdge: { type: 'straight', style: { strokeWidth: 2, strokeDasharray: '4' } },
+    componentEdge: {
+        type: 'smoothstep',
+        style: {
+            strokeWidth: 3
+        },
+        markerEnd: {
+            type: MarkerType.ArrowClosed
+        }
+    },
+    commentEdge: {
+        type: 'straight',
+        style: {
+            strokeWidth: 2,
+            strokeDasharray: '4'
+        }
+    },
 };
 
+/**
+ * Initial node data for the React Flow application.
+ */
 const initialNodes: Node[] = [
-    { id: 'n-1', type: 'pythonComponent', position: { x: 10, y: 10 }, data: { component: new PythonComponent('test-name', 'test-code') } },
-    { id: 'n-2', type: 'urlComponent', position: { x: 10, y: 210 }, data: { component: new UrlComponent('test-name', 'test-url') } },
-    { id: 'n-3', type: 'comment', position: { x: 170, y: 120 }, data: { comment: 'Comment' } },
+    {
+        id: 'n-1',
+        type: 'pythonComponent',
+        position: { x: 10, y: 10 },
+        data: {
+            component: new PythonComponent('test-name', 'test-code')
+        }
+    },
+    {
+        id: 'n-2',
+        type: 'urlComponent',
+        position: { x: 10, y: 210 },
+        data: {
+            component: new UrlComponent('test-name', 'test-url')
+        }
+    },
+    {
+        id: 'n-3',
+        type: 'comment',
+        position: { x: 170, y: 120 },
+        data: {
+            comment: 'Comment'
+        }
+    },
 ];
 
+/**
+ * Initial edge data for the React Flow application.
+ */
 const initialEdges: Edge[] = [
-    { id: 'e-1-2', source: 'n-1', target: 'n-2', ...edgeStyles.componentEdge },
-    { id: 'c-2', source: 'n-3', target: 'n-2', ...edgeStyles.commentEdge },
+    {
+        id: 'e-1-2',
+        source: 'n-1',
+        target: 'n-2',
+        ...edgeStyles.componentEdge
+    },
+    {
+        id: 'c-2',
+        source: 'n-3',
+        target: 'n-2',
+        ...edgeStyles.commentEdge
+    },
 ];
 
+/**
+ * Defines the state store for the React Flow application.
+ */
 export type RFState = {
     reactFlowInstance?: ReactFlowInstance;
     reactFlowWrapper: React.RefObject<HTMLDivElement>;
@@ -69,6 +132,9 @@ export type RFState = {
     onDrop: React.DragEventHandler<HTMLDivElement>;
 };
 
+/**
+ * Creates a Zustand store for managing the state of the React Flow application.
+ */
 const useStore = create<RFState>((set, get) => ({
     reactFlowWrapper: React.createRef<HTMLDivElement>(),
     nodeTypes: nodeTypes,

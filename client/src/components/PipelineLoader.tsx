@@ -4,11 +4,17 @@ import './PipelineLoader.css';
 
 import useStore from './state-store';
 
+/**
+ * Component for loading and saving pipelines in JSON format.
+ */
 function PipelineLoader() {
     const [setNodes, setEdges] = useStore((state) => [state.setNodes, state.setEdges]);
 
     const reactFlowInstance = useStore((state) => state.reactFlowInstance);
 
+    /**
+     * Handles the saving of the current pipeline as a JSON file.
+     */
     const onSavePipeline = () => {
         if (reactFlowInstance) {
             const flow = reactFlowInstance.toObject();
@@ -17,6 +23,10 @@ function PipelineLoader() {
         }
     };
 
+    /**
+     * Handles the restoration of a pipeline from a JSON file.
+     * @param {React.ChangeEvent<HTMLInputElement>} event - The change event from the file input.
+     */
     const onRestorePipeline = (event: React.ChangeEvent<HTMLInputElement>) => {
         const upload = event.target?.files?.[0];
         if (upload) {

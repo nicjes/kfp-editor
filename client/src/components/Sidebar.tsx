@@ -2,7 +2,15 @@ import { DragEvent } from 'react';
 
 import './Sidebar.css';
 
+/**
+ * Sidebar component for displaying and dragging nodes from the component hub.
+ */
 function Sidebar() {
+    /**
+     * Handles the drag start event for a specific node type.
+     * @param {DragEvent} event - The drag start event.
+     * @param {string} nodeType - The type of the node being dragged.
+     */
     const onDragStart = (event: DragEvent, nodeType: string) => {
         event.dataTransfer.setData('application/reactflow', nodeType);
         event.dataTransfer.effectAllowed = 'move';

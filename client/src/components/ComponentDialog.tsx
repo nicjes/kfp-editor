@@ -4,6 +4,9 @@ import './ComponentDialog.css';
 
 import { RenderInputsProps } from './nodes/ComponentNode';
 
+/**
+ * Props for the ComponentDialog component.
+ */
 interface ComponentDialogProps {
     data: any;
     dialogRef: React.RefObject<HTMLDialogElement>;
@@ -12,21 +15,35 @@ interface ComponentDialogProps {
     update: boolean;
 }
 
+/**
+ * A dialog component for rendering and editing component properties.
+ * @param {ComponentDialogProps} props - The ComponentDialogProps containing component data and functions.
+ */
 function ComponentDialog({ data, dialogRef, renderInputs, handleCloseDialog, update }: ComponentDialogProps) {
     const [savedInputValues, setSavedInputValues] = useState<{ [key: string]: string }>({});
     const [currentInputValues, setCurrentInputValues] = useState<{ [key: string]: string }>({});
 
+    /**
+     * Handle cancel button click.
+     */
     const handleCancel = () => {
         setCurrentInputValues(savedInputValues);
         handleCloseDialog();
     };
 
+    /**
+     * Handle confirm button click.
+     */
     const handleConfirm = () => {
         data.input = currentInputValues;
         setSavedInputValues(currentInputValues);
         handleCloseDialog();
     };
 
+    /**
+     * Handle input field change.
+     * @param {item} item - An object containing the field and value to update.
+     */
     const handleInputChange = (item: { field: string; value: string }) => {
         setCurrentInputValues((prevInputValues) => ({
             ...prevInputValues,
@@ -34,6 +51,10 @@ function ComponentDialog({ data, dialogRef, renderInputs, handleCloseDialog, upd
         }));
     };
 
+    /**
+     * Extract input values from input elements.
+     * @param {ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>} event - The input change event.
+     */
     const extractInput = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
         handleInputChange({ field: event.target.name, value: event.target.value });
     };

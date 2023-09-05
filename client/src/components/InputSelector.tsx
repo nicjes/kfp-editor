@@ -4,11 +4,17 @@ import './InputSelector.css';
 
 import useStore from "./state-store";
 
+/**
+ * Represents the data received from connected nodes.
+ */
 interface ReceivedData {
     nodeId: string;
     data: { [key: string]: string };
 }
 
+/**
+ * Props for the InputSelector component.
+ */
 interface InputSelectorProps {
     field: string;
     nodeId: string;
@@ -16,11 +22,18 @@ interface InputSelectorProps {
     onClick: (item: { field: string; value: string }) => void;
 }
 
+/**
+ * A component for selecting input data from connected nodes.
+ * @param {InputSelectorProps} props - The InputSelectorProps containing field, nodeId, update, and onClick functions.
+ */
 function InputSelector({ field, nodeId, update, onClick }: InputSelectorProps) {
     const [receivedData, setReceivedData] = useState<ReceivedData[]>([]);
 
     const { reactFlowInstance } = useStore();
 
+    /**
+     * Updates the received data from connected nodes.
+     */
     const updateReceivedData = () => {
         const flow = reactFlowInstance?.toObject();
 

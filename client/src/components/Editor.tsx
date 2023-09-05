@@ -15,6 +15,7 @@ import './Editor.css';
 
 import useStore, { RFState } from './state-store';
 
+// Selector function to extract specific state properties from the store.
 const selector = (state: RFState) => ({
     reactFlowWrapper: state.reactFlowWrapper,
     nodeTypes: state.nodeTypes,
@@ -31,7 +32,12 @@ const selector = (state: RFState) => ({
     onDrop: state.onDrop,
 });
 
+/**
+ * The main Editor component of the React Flow application.
+ * Renders the React Flow canvas and controls, as well as the sidebar for adding nodes.
+ */
 function Editor() {
+    // Use the selector function to extract state properties and initialize them.
     const {
         reactFlowWrapper,
         nodeTypes,

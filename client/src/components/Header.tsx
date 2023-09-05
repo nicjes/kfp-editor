@@ -1,5 +1,8 @@
 import './Header.css'
 
+/**
+ * The Header component displaying the title of the application.
+ */
 function Header() {
     return (
         <header className='header-global'>
