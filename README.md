@@ -1,3 +1,7 @@
+> [!WARNING] 
+> Please note that this project is not intended for production use.  
+> Expect potential bugs and incomplete features as this is an experimental prototype for the purpose of academic research.
+
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
@@ -41,12 +45,18 @@
 
 You can either install and run a local copy (e.g. for development) or containerize the app by following these simple steps.
 
+
 ### Prerequisites
 
-* [npm](https://www.npmjs.com/)
-* [Rancher Desktop](https://rancherdesktop.io/) with Kubernetes enabled (for Containerization)
+*Local Installation:*
+[npm](https://www.npmjs.com/),
+[Python](https://www.python.org/)
 
-### Installation & Startup
+*Containerization:*
+[Rancher Desktop](https://rancherdesktop.io/) (with Kubernetes enabled)
+
+
+### Local Installation
 
 1. Clone the repository
    ```sh
