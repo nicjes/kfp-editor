@@ -6,7 +6,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/nicjes/kfp-editor">
-    <img src="logo.png" alt="Logo" width="140" height="140">
+    <img src="logo.png" alt="Logo" width="140">
   </a>
 
 <h3 align="center">Kubeflow Pipelines Visual Editor</h3>
@@ -14,6 +14,10 @@
     A low-code editor that facilitates the construction of ML pipelines for Kubeflow
     <br \>
     and promotes the idea of reusable components.
+  </p>
+   <br \>
+   <img src="demo.gif" alt="Demo" width="800">
+   <br \>
 </div>
 
 
@@ -22,6 +26,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
+
 ### Key Features
 
 * **Beginner-friendly**: Place and connect ML components on a drag-and-drop interface
@@ -29,8 +34,6 @@
 * **Save/Restore**: Save, restore, share, and edit created pipelines
 * **Kubeflow integration**: Export a YAML specification to run the pipeline in Kubeflow
 * **Future-proof:** Cross-compatible for KFP v1.x and v2
-
-
 
 
 ### Built With
@@ -114,6 +117,7 @@ This repository comes with a `Dockerfile` for easier deployment.
 
 
 
+
 <!-- USAGE EXAMPLES -->
 ## Basic usage example
 
@@ -124,6 +128,14 @@ This repository comes with a `Dockerfile` for easier deployment.
 5. Choose the desired values which were inherited from its parents
 6. Save your first pipeline as a JSON file
 7. Export a YAML file to run your pipeline within Kubeflow
+
+
+
+<!-- INTEGRATION -->
+## Kubeflow Integration
+It is also possible to deploy the containerized application on Kubernetes and extend the Kubeflow Dashboard Config for tighter integration.
+
+<img src="dashboard.png" alt="Dashboard" width="800">
 
 
 
